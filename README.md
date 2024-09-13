@@ -22,9 +22,8 @@
     alt="Website Badge" />
 </p>
 
-This project is intended to showcase our knowledge learning about Neural Network Design by developing a
+I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a browser using playwright and plays music from pianostream.com with a custom GUI audio controls built with the Kivy UI Python UI library. All of this is going to be placed within a 3D printed case that has openings for all ports and the 5 inch touchscreen. This project will be made public when it is completed and this page will be updated with more images when its in a working condition.
 
-![project image](resources/image1.png)
 
 <details>
 <summary style="color:#5087dd">Watch the Full Video Demo Here</summary>
@@ -65,8 +64,6 @@ This project is intended to showcase our knowledge learning about Neural Network
 
 # Team / Contributors / Teachers
 - [Mitchell Kolb](https://github.com/mitchellkolb)
-- [name]()
-- Professor. 
 
 
 
@@ -74,9 +71,8 @@ This project is intended to showcase our knowledge learning about Neural Network
 
 # How to Set Up
 This project was implemented on our local machine inside of a virtual machine using:
-- Ubuntu Version 20.04.03 found at this [link](http://lt.releases.ubuntu.com/20.04.3/).
 - Clone this repository 
-- Open terminal at the codebase `~.../ext2/Noah-Mitchell/`
+- Open terminal at the codebase `~.../pi-music-player/`
 
 
 
@@ -93,10 +89,6 @@ This project utilizes
 In this project, we apply 
 
 
-### Literature Review
-In this we drew inspiration from various sources, including video tutorials online for 
-
-
 ### Technical Plan
 The project employs a 
 
@@ -104,7 +96,7 @@ The project employs a
 ### Implementation Details
 
 #### Files and Structure
-- `game.py`: Contains the racing game environment and controls the car's movement.
+- `main.py`: Contains the UI code.
 > [!NOTE]
 > These files were 
 
@@ -112,19 +104,11 @@ The project employs a
 ### Implementation
 In this project
 
-#### Results and Observations
-During development,
-<p float="left">
-  <img src="resources/image1.png" alt="First Try" width="300" />
-  <img src="resources/image2.png" alt="Final Try" width="307" />
-</p>
-
 #### Future Work
 Future improvements could include
 
 
 
-## References
 
 
 
