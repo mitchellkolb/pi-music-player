@@ -1,16 +1,16 @@
-# pi-music-player
 
 
-<h1 align="center">Title</h1>
+
+<h1 align="center">Pi Music Player</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/mitchellkolb/GIT-REPO?color=56BEB8">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/mitchellkolb/pi-music-player?color=A22846">
 
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/mitchellkolb/GIT-REPO?color=56BEB8">
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/mitchellkolb/pi-music-player?color=A22846">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/mitchellkolb/GIT-REPO?color=56BEB8">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/mitchellkolb/pi-music-player?color=A22846">
 
-  <img alt="Github stars" src="https://img.shields.io/github/stars/mitchellkolb/GIT-REPO?color=56BEB8" />
+  <img alt="Github stars" src="https://img.shields.io/github/stars/mitchellkolb/pi-music-player?color=A22846" />
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@
     src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"
     alt="Website Badge" />
 <img
-    src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=Windows 10&logoColor=white"
+    src="https://img.shields.io/badge/raspberrypi-A22846?style=for-the-badge&logo=raspberrypi&logoColor=white"
     alt="Website Badge" />
 </p>
 
@@ -127,8 +127,4 @@ Future improvements could include
 ## References
 
 
-
---- 
-# Acknowledgments
-This codebase and all supporting materials was made as apart of a course for my undergrad at WSU for CPTS XXX - XXX in the Spring of 2022. 
 
