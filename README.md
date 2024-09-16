@@ -22,7 +22,7 @@
     alt="Website Badge" />
 </p>
 
-I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a browser using playwright and plays music from pianostream.com with a custom GUI audio controls built with the Kivy UI Python UI library. All of this is going to be placed within a 3D printed case that has openings for all ports and the 5 inch touchscreen. This project will be made public when it is completed and this page will be updated with more images when its in a working condition.
+I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a browser using playwright and plays music from [pianostream](pianostream.com) with a custom GUI audio controls built with the Kivy UI Python UI library. All of this is going to be placed within a 3D printed case that has openings for all ports and the 5 inch touchscreen.
 
 
 <details>
@@ -38,17 +38,16 @@ I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a br
 # Table of Contents
 - [What I Learned](#what-i-learned-in-this-project)
 - [Tools Used / Development Environment](#tools-used--development-environment)
-- [Team / Contributors / Teachers](#team--contributors--teachers)
 - [How to Set Up](#how-to-set-up)
 - [Project Overview](#project-overview)
-- [References](#references)
-- [Acknowledgments](#acknowledgments)
+
 
 ---
 
 # What I Learned in this Project
-- How to
-- Programming in 
+- Producing complete software that is used by the client
+- Programming using web automation and a new UI library
+- Learning how to create 3D models that can be printed and fit with other peripherals.
 
 
 
@@ -57,15 +56,9 @@ I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a br
 - VS Code
 - Terminal
 - Windows 10
-
 - Music Site: [pianostream.com](https://playwright.dev/) 
 - UI Library: [Kivy.org](https://kivy.org/)
 - Web Automation: [playwright.dev](http://pianostream.com/) 
-
-
-
-# Team / Contributors / Teachers
-- [Mitchell Kolb](https://github.com/mitchellkolb)
 
 
 
@@ -87,26 +80,17 @@ This project utilizes
 
 ## Project Details
 
-### Introduction
-In this project, we apply 
 
-
-### Technical Plan
-The project employs a 
-
-
-### Implementation Details
-
-#### Files and Structure
+## Files and Structure
 - `main.py`: Contains the UI code.
 > [!NOTE]
 > These files were 
 
 
-### Implementation
+## Implementation
 In this project
 
-#### Future Work
+## Future Work
 Future improvements could include
 
 
