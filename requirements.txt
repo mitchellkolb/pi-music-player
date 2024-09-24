@@ -1,0 +1,16 @@
+Package            Version
+------------------ ---------
+certifi            2024.8.30
+charset-normalizer 3.3.2
+docutils           0.21.2
+ffpyplayer         4.5.1
+idna               3.10
+Kivy               2.3.0
+Kivy-examples      2.3.0
+Kivy-Garden        0.1.5
+pillow             10.4.0
+pip                22.0.2
+Pygments           2.18.0
+requests           2.32.3
+setuptools         59.6.0
+urllib3            2.2.3

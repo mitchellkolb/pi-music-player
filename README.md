@@ -68,8 +68,8 @@ I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a br
 - This is optional step you can take before the installation & setup section to help keep the project libraries seperate
   - ***(OPTIONAL)*** Create a virtual environment if you choose to do so
       - In the /pi-music-player folder
-      - `python -m venv myenv`
-      - On macOS and Linux `source myenv/bin/activate`
+      - `python3 -m venv venv`
+      - On macOS and Linux `source venv/bin/activate`
   - ***(OPTIONAL)*** Managing the virtual environment
       - When you want to leave use `deactivate`
       - Make sure to upgrade pip `python -m pip install --upgrade pip`
