@@ -56,9 +56,9 @@ I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a br
 - VS Code
 - Terminal
 - Windows 10
-- Music Site: [pianostream.com](https://playwright.dev/) 
+- Music Site: [pianostream.com](http://pianostream.com/) 
 - UI Library: [Kivy.org](https://kivy.org/)
-- Web Automation: [playwright.dev](http://pianostream.com/) 
+- Web Automation: [playwright.dev](https://playwright.dev/) 
 
 
 

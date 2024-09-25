@@ -1,21 +1,44 @@
+from playwright.sync_api import sync_playwright, Playwright
 
+def run(playwright: Playwright):
+    browser = playwright.chromium.launch(headless=False)  # Set headless=True to run without GUI
+    context = browser.new_context()
 
-import re
-from playwright.sync_api import Page, expect
+    # Open a new page
+    start_url = "http://pianostream.com/"
+    page = context.new_page()
 
-def test_has_title(page: Page):
-    page.goto("https://playwright.dev/")
+    # Navigate to the login page
+    page.goto(start_url)
 
-    # Expect a title "to contain" a substring.
-    expect(page).to_have_title(re.compile("Playwright"))
+    # Fill in the username and password fields using the provided selectors
+    page.fill("#email", "test")      # Using the 'id' selector for the email field
+    page.fill("#password", "test")   # Using the 'id' selector for the password field
 
-def test_get_started_link(page: Page):
-    page.goto("https://playwright.dev/")
+    # Click the login button
+    page.click("button[type='submit']")  # Update this selector if necessary
 
-    # Click the get started link.
-    page.get_by_role("link", name="Get started").click()
+    # Wait for navigation after login
+    page.wait_for_load_state("networkidle")
 
-    # Expects page to have a heading with the name of Installation.
-    expect(page.get_by_role("heading", name="Installation")).to_be_visible()
+    # Navigate to the music page (if not redirected automatically)
+    page.goto("https://www.your-music-site.com/music")  # Replace with the actual music page URL
 
-print("Ran tests")
+    # Click the play button
+    page.click("button.play-button")  # Update the selector based on the site's play button
+
+    # Wait for the song title to appear
+    page.wait_for_selector("div.song-title")  # Update the selector based on the site's structure
+
+    # Extract the song title
+    song_title = page.inner_text("div.song-title")
+    print("Currently playing:", song_title)
+
+    # Optionally, keep the browser open
+    input("Press Enter to close the browser...")
+
+    # Close the browser
+    browser.close()
+
+with sync_playwright() as playwright:
+    run(playwright)
