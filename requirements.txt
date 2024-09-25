@@ -21,6 +21,7 @@ Pygments           2.18.0
 pytest             8.3.3
 pytest-base-url    2.1.0
 pytest-playwright  0.5.2
+python-dotenv      1.0.1
 python-slugify     8.0.4
 requests           2.32.3
 setuptools         59.6.0
