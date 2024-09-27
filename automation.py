@@ -13,19 +13,24 @@ class MusicAutomation:
         self.password = None
 
     def loadCredentails(self):
+        # Loads the creds from the local .env file to use in the browser instance
         load_dotenv()
 
-        email = os.getenv('EMAIL')
-        password = os.getenv('PASSWORD')
+        self.email = os.getenv('EMAIL')
+        self.password = os.getenv('PASSWORD')
+        print({self.email})
 
-        if not email or not password:
+        if not self.email or not self.password:
             print("Email or password not found in environment variables.")
             return
 
-    def start_browser(self):
-        # This starts the browser instance and ope
+    def startBrowser(self):
+        # This starts the browser instance and opens the webpage and waits for it to load
         with sync_playwright() as playwright:
-            self.browser
+            self.browser = playwright.firefox.launch(headless=False, args=["--window-size=720,550"])
+            self.page = self.browser.new_page()
+            self.page.goto(self.site_url)
+            print("I'm at the site")
 
 
 
@@ -108,6 +113,8 @@ def main():
 
     automation = MusicAutomation("http://pianostream.com/")
 
+    automation.loadCredentails()
+    automation.startBrowser()
 
 
 if __name__ == "__main__":
