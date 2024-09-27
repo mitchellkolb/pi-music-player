@@ -15,10 +15,14 @@ class AudioPlayerApp(App):
         return layout
     
     def play_audio(self, instance):
-        # Load and play the MP3 file
-        sound = SoundLoader.load('path/to/your/file.mp3')
-        if sound:
-            sound.play()
+        
+        if  lock == False:
+            
+            lock = True
+            # Load and play the MP3 file
+            sound = SoundLoader.load('songs/train.mp3')
+            if sound:
+                sound.play()
 
 if __name__ == "__main__":
     AudioPlayerApp().run()

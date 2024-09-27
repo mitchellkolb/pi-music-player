@@ -4,6 +4,30 @@ import os
 
 
 
+class MusicAutomation:
+    def __init__(self, site_url: str):
+        self.site_url = site_url
+        self.browser = None
+        self.page = None
+        self.email = None
+        self.password = None
+
+    def loadCredentails(self):
+        load_dotenv()
+
+        email = os.getenv('EMAIL')
+        password = os.getenv('PASSWORD')
+
+        if not email or not password:
+            print("Email or password not found in environment variables.")
+            return
+
+    def start_browser(self):
+        # This starts the browser instance and ope
+        with sync_playwright() as playwright:
+            self.browser
+
+
 
 def run(playwright: Playwright):
 
@@ -19,8 +43,8 @@ def run(playwright: Playwright):
 
 
     # Browser Code begins here:
-    browser = playwright.chromium.launch(headless=False)  # Set headless=True to run without GUI
-    context = browser.new_context()
+    browser = playwright.firefox.launch(headless=False)  # Set headless=True to run without GUI
+    context = browser.new_context(viewport={"width": 720, "height": 550})
 
     # Open a new page
     start_url = "http://pianostream.com/"
@@ -75,5 +99,16 @@ def run(playwright: Playwright):
 
 
 
-with sync_playwright() as playwright:
-    run(playwright)
+
+
+
+
+
+def main():
+
+    automation = MusicAutomation("http://pianostream.com/")
+
+
+
+if __name__ == "__main__":
+    main()
