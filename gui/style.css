@@ -1,0 +1,34 @@
+
+
+QWidget {
+    background-color: #F9DBBA;
+}
+
+QPushButton {
+    background-color: #5BB9C2;
+    padding: 15px;
+    border-radius: 9px;
+    color: #333;
+}
+
+QPushButton:hover {
+    background-color: #1A4870;
+    color: #F9DBBA;
+}
+
+QLabel {
+    color: #333;
+}
+
+#title {
+    font-family: Papyrus;
+    font-size: 40px;
+}
+
+QSlider {
+    margin-right: 15px;
+}
+
+QListWidget {
+    color: #333;
+}
