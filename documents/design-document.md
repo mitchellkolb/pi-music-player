@@ -12,8 +12,11 @@
 - On startup the raspberry pi launches the GUI
 - GUI
     - "start" button to begin the automation 
-    - "Settings" button 
+    - "Settings" button
+        - To shutdown/quit the gui
+        - Restart raspberry pi
     - "Play" button 
+        - When pressed the 
     - "Pause" button 
     - "Volume Slider" button 
     - "Thumbs Up" button 
