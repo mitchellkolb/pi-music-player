@@ -30,6 +30,7 @@
             - When pressed the web automation presses the pause button on the website to pause the music
             - When pressed the button alternates to the play icon and takes on the play functionality
         - "Volume Slider" button 
+            - A number incrementer that has like 5 options it locks to and when it does presses a certain point on the website slider.
         - "Thumbs Up" button 
         - "Thumbs Down" button 
 - Automation
