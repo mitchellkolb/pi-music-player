@@ -7,6 +7,8 @@
 ## Table of Contents
 - [Introduction]()
 - [Notes of Program](#notes-of-program)
+- [Functional Requirements](#functional-requirements)
+- [Nonfunctional Requirements](#nonfunctional-requirements)
 
 
 ### Notes of Program
