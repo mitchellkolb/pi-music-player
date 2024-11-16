@@ -25,8 +25,10 @@
             - Restart raspberry pi
         - "Play" button 
             - When pressed the web automation presses the play button on the website to play the music
+            - When pressed the button alternates to the pause icon and takes on the pause functionality
         - "Pause" button 
             - When pressed the web automation presses the pause button on the website to pause the music
+            - When pressed the button alternates to the play icon and takes on the play functionality
         - "Volume Slider" button 
         - "Thumbs Up" button 
         - "Thumbs Down" button 
