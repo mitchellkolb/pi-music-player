@@ -21,11 +21,12 @@
         - "update" to pull the latest version from the repo and restart the gui
     - WINDOW 2 (Music Player)
         - "Settings" button
-            - To shutdown/quit the gui
+            - To shutdown/quit the gui and return to the desktop
             - Restart raspberry pi
         - "Play" button 
-            - When pressed the 
+            - When pressed the web automation presses the play button on the website to play the music
         - "Pause" button 
+            - When pressed the web automation presses the pause button on the website to pause the music
         - "Volume Slider" button 
         - "Thumbs Up" button 
         - "Thumbs Down" button 
