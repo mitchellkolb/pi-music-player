@@ -1,17 +1,24 @@
 
 
 # System Design Document: Pi Music Player
-
+Mitchell Kolb
 
 
 ## Table of Contents
-- [Introduction]()
+- [Outline](#outline)
 - [Notes of Program](#notes-of-program)
+- [Rough GUI Idea](#gui-layout-idea)
 - [Functional Requirements](#functional-requirements)
 - [Nonfunctional Requirements](#nonfunctional-requirements)
 
 
-### Notes of Program
+
+## Outline
+
+
+
+
+## Notes of Program
 - On startup the raspberry pi launches the GUI
 - GUI
     - WINDOW 1 (Startup)
@@ -31,17 +38,34 @@
             - When pressed the button alternates to the play icon and takes on the play functionality
         - "Volume Slider" button 
             - A number incrementer that has like 5 options it locks to and when it does presses a certain point on the website slider.
+            - This slider could also just be connected to system audio settings and keep the website volume on max but just adjust the system volume
         - "Thumbs Up" button 
-        - "Thumbs Down" button 
+            - When pressed the web automation presses the thumbs up button on the website to thumbs up the current track
+        - "Thumbs Down" button
+            - When pressed the web automation presses the thumbs down button on the website to thumbs down the current track
+ 
 - Automation
     - Logs into the painostream.com
     - Save the Song image, title, artist
 
 
 
-### Functional Requirements
-- 
+## GUI Layout Idea
+This is a rough idea I made in figma that I will try and follow for the gui on the raspberry pi
+![rough idea](rough-gui-layout.png)
 
 
-### Nonfunctional Requirements
+
+## Functional Requirements
+- The system must be hands off from the raspberry pi boot up
+    - When the power is plugged in the system will turn on so we can use that as a On/Off switch
+    - When power is on the system should boot up and open the GUI startup screen in kiosk mode.
+
+
+
+## Nonfunctional Requirements
+- Maintainability 
+- Reliability
+- Usability
+- Performance
 
