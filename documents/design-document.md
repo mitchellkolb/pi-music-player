@@ -64,8 +64,8 @@ This is a rough idea I made in figma that I will try and follow for the gui on t
 
 
 ## Nonfunctional Requirements
-- Maintainability 
-- Reliability
-- Usability
-- Performance
+- Modular Design: The system must be designed in a modular fashion to allow individual components (e.g., PyQT GUI, Playwright browser automation, power control logic) to be updated or replaced without affecting the overall functionality.
+- Documentation: Comprehensive documentation must be provided for hardware setup, software dependencies, configuration files, and codebase structure to facilitate troubleshooting and upgrades.
+- Dependency Management: Python libraries and Rust modules must be version-locked using tools like pip freeze or a requirements.txt file to ensure compatibility during updates or reinstallation.
+- Configuration Files: All system settings (e.g., kiosk mode, screen resolution, browser preferences) should be stored in external configuration files to enable easy adjustments without modifying the codebase.
 
