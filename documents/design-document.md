@@ -61,6 +61,10 @@ This is a rough idea I made in figma that I will try and follow for the gui on t
     - When the power is plugged in the system will turn on so we can use that as a On/Off switch
     - When power is on the system should boot up and open the GUI startup screen in kiosk mode.
 
+- Music Playback
+    - The system must connect to PianoStream via a browser instance controlled by Playwright.
+    - Music playback should begin automatically upon startup or after the user selects their desired station from the custom GUI.
+
 
 
 ## Nonfunctional Requirements
