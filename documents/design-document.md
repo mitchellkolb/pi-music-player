@@ -59,17 +59,14 @@ This is a rough idea I made in figma that I will try and follow for the gui on t
 ## Functional Requirements
 - The system must be hands off from the raspberry pi boot up
     - When the power is plugged in the system will turn on so we can use that as a On/Off switch
-    - When power is on the system should boot up and open the GUI startup screen in kiosk mode.
-
+    - When power is on the The GUI must launch in kiosk mode (full-screen, without window borders or OS distractions) on the connected 5-inch touchscreen display.
 - Music Playback
     - The system must connect to PianoStream via a browser instance controlled by Playwright.
     - Music playback should begin automatically upon startup or after the user selects their desired station from the custom GUI.
-
 - Custom GUI Audio Controls
     -  The PyQt-based GUI must provide intuitive controls for: Play/Pause, Adjusting volume, and Navigating between tracks or stations
     - Controls should visually update to reflect the current playback status (e.g., muted, paused).
     - The GUI must communicate with Playwright to control browser-based playback.
-
 - Connectivity
     - The system must connect to a Wi-Fi network automatically upon boot to enable access to PianoStream.
     - Provide a fallback mechanism for configuring Wi-Fi credentials if the initial setup fails.
