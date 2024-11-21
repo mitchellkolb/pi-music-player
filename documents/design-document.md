@@ -65,6 +65,10 @@ This is a rough idea I made in figma that I will try and follow for the gui on t
     - The system must connect to PianoStream via a browser instance controlled by Playwright.
     - Music playback should begin automatically upon startup or after the user selects their desired station from the custom GUI.
 
+- Custom GUI Audio Controls
+    -  The PyQt-based GUI must provide intuitive controls for: Play/Pause, Adjusting volume, and Navigating between tracks or stations
+    - Controls should visually update to reflect the current playback status (e.g., muted, paused).
+    - The GUI must communicate with Playwright to control browser-based playback.
 
 
 ## Nonfunctional Requirements
