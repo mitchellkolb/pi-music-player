@@ -70,6 +70,13 @@ This is a rough idea I made in figma that I will try and follow for the gui on t
     - Controls should visually update to reflect the current playback status (e.g., muted, paused).
     - The GUI must communicate with Playwright to control browser-based playback.
 
+- Connectivity
+    - The system must connect to a Wi-Fi network automatically upon boot to enable access to PianoStream.
+    - Provide a fallback mechanism for configuring Wi-Fi credentials if the initial setup fails.
+
+
+
+
 
 ## Nonfunctional Requirements
 - Modular Design: The system must be designed in a modular fashion to allow individual components (e.g., PyQT GUI, Playwright browser automation, power control logic) to be updated or replaced without affecting the overall functionality.
