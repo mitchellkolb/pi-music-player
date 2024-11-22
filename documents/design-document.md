@@ -21,12 +21,12 @@ Mitchell Kolb
 ## Notes of Program
 - On startup the raspberry pi launches the GUI
 - GUI
-    - WINDOW 1 (Startup)
+    - LAYOUT 1 (Startup)
         - "start" button to begin the web automation 
         - "quit" button to shutdown the gui and return to the desktop
         - "restart" button to restart the PI
         - "update" to pull the latest version from the repo and restart the gui
-    - WINDOW 2 (Music Player)
+    - LAYOUT 2 (Music Player)
         - "Settings" button
             - To shutdown/quit the gui and return to the desktop
             - Restart raspberry pi
