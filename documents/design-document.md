@@ -45,8 +45,13 @@ Mitchell Kolb
             - When pressed the web automation presses the thumbs down button on the website to thumbs down the current track
  
 - Automation
+    - Open either a headless browser instance or a rendered browser that is imediately shifted out of focus
     - Logs into the painostream.com
+        - Store Username and pass in a env file that is only saved locally on the instance.
+        - Once logged in render the desktop version of the site if needed
+        - Press play to begin the songs list and button actions can connect to the rendered items
     - Save the Song image, title, artist
+        - The information comes the site that is displayed on the GUI
 
 
 
