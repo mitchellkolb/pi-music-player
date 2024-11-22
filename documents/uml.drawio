@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="VrkzJVak8nmIPW7uS7e2" name="Page-1">
-        <mxGraphModel dx="1075" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="874" dy="510" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -27,11 +27,29 @@
                 <mxCell id="9" value="GUI Opens offline layout 1" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="480" y="120" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="Layout 1" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="20" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="14" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Layout 1 - Offline Play and Online Startup" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="400" y="260" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="16" value="Layout 2" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="570" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="19" target="21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="19" target="21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Start" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="400" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="Shut Down" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="540" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="Return to desktop / Quit Gui" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="540" width="220" height="90" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
