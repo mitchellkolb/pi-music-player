@@ -68,19 +68,37 @@ class MusicAutomation:
         if self.playwright:
             self.playwright.stop()
 
+    def hello(self):
+        print("Moving on")
 
 
-    def viewNetwork(self):
+    def handleRequest(self, request):
+        resource_type = request.resource_type
+        if resource_type in ["media"]:
+            print(f"--> Media Request: {request.method} {request.url}")
+        if resource_type in ["image"]:
+            print(f"<-- Image Response: {request.method} {request.url}")
+         
+
+    def handleResponse(self, response):
+        resource_type = response.request.resource_type
+        if resource_type in ["media"]:
+            print(f"<-- Media Response: {response.status} {response.url}")
+           
+    def eventListeners(self):
         if not self.page:
-            print("downloadSong(): -> Browser Page is not initialized. Call startBrowser() first.")
+            print("eventListeners() -> Browser Page is not initialized. Call startBrowser() first.")
             return
-        
+
         try:
-            print("viewing network links")
+            if self.commentsEnable:
+                print("Starting listeners...")
+            # Note the use of self.handleRequest and self.handleResponse
+            self.page.on("request", self.handleRequest)
+            #self.page.on("response", self.handleResponse)
 
         except Exception as e:
-            print(f"Error fetching album art URL: {e}")
-            return
+            print(f"Error setting event listeners: {e}")
         
 
     def clickButton(self, selector: str, attributeName: str) -> bool:
@@ -104,6 +122,8 @@ class MusicAutomation:
         return self.clickButton("#skipButton", "Skip Button")
 
 
+    def clickPlayPause(self):
+        return self.clickButton("#playButton", "Play Button")
 
 
 

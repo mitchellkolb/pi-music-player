@@ -13,7 +13,9 @@ def main():
     while True:
         print("\nMain Menu")
         print("1) Launch Browser")
-        print("2) Begin Downloading")
+        print("2) Skip")
+        print("3) Pause/Play")
+        print("4) Hello Print")
         print("9) Exit")
 
         try:
@@ -22,11 +24,14 @@ def main():
             if choice == 1:
                 myautomation.loadCredentails()
                 myautomation.startBrowser()
+                myautomation.eventListeners()
                 myautomation.login()
             elif choice == 2:
-                myautomation.page.wait_for_timeout(10000)
-                selected_urls = myautomation.getSelectedURLs()
-                print("Filtered URLs:", selected_urls)
+                myautomation.clickSkip()
+            elif choice == 3:
+                myautomation.clickPlayPause()
+            elif choice == 4:
+                myautomation.hello()
             elif choice == 9:
                 myautomation.close()
                 print("Completed myautomation")
