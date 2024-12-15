@@ -15,7 +15,8 @@ class MusicAutomation:
         self.email = None
         self.password = None
         self.commentsEnable = True
-        self.selectedURLs = []  # To store URLs for downloading
+        self.coverImage = ""
+        self.songLink = ""
 
     def loadCredentails(self):
         # Loads the creds from the local .env file to use in the browser instance
@@ -75,10 +76,36 @@ class MusicAutomation:
     def handleRequest(self, request):
         resource_type = request.resource_type
         if resource_type in ["media"]:
-            print(f"--> Media Request: {request.method} {request.url}")
+            if "-pianostream.com/api" in request.url:
+               self.songLink = request.url
+               print(f"{request.url}")
         if resource_type in ["image"]:
-            print(f"<-- Image Response: {request.method} {request.url}")
-         
+            if "-ssl.mzstatic" in request.url:
+                self.coverImage = request.url
+                print(f"{request.url}")
+
+                try:
+                    filename = "CoverImage"
+                    # Create the "SavedImages" directory in the current directory if it doesn't exist
+                    save_dir = os.path.join(os.getcwd(), "SavedImages")
+                    os.makedirs(save_dir, exist_ok=True)
+
+                    # Define the full save path
+                    save_path = os.path.join(save_dir, filename)
+
+                    # Send a GET request to the URL
+                    response = requests.get(request.url, stream=True)
+                    response.raise_for_status()  # Check for HTTP errors
+
+                    # Open the file in write-binary mode and write the content
+                    with open(save_path, 'wb') as file:
+                        for chunk in response.iter_content(chunk_size=8192):
+                            file.write(chunk)
+                    
+                    print(f"File saved to {save_path}")
+                except requests.exceptions.RequestException as e:
+                    print(f"Error downloading the file: {e}")
+                    
 
     def handleResponse(self, response):
         resource_type = response.request.resource_type
