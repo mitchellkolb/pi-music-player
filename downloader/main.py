@@ -16,6 +16,8 @@ def main():
         print("2) Skip")
         print("3) Pause/Play")
         print("4) Hello Print")
+        print("5) Download Cover Image")
+        print("6) Add meta data")
         print("9) Exit")
 
         try:
@@ -24,7 +26,6 @@ def main():
             if choice == 1:
                 myautomation.loadCredentails()
                 myautomation.startBrowser()
-                myautomation.eventListeners()
                 myautomation.login()
             elif choice == 2:
                 myautomation.clickSkip()
@@ -32,6 +33,13 @@ def main():
                 myautomation.clickPlayPause()
             elif choice == 4:
                 myautomation.hello()
+                myautomation.eventListeners()
+            elif choice == 5:
+                print("choice 5")
+                myautomation.downloadCoverImage()
+            elif choice == 6:
+                print("choice 6")
+                myautomation.addMetaData()
             elif choice == 9:
                 myautomation.close()
                 print("Completed myautomation")
