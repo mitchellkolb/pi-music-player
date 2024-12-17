@@ -31,7 +31,6 @@ class MusicAutomation:
             return
 
 
-
     def startBrowser(self):
         # This starts the browser instance and opens the webpage
         self.playwright = sync_playwright().start()
@@ -69,16 +68,60 @@ class MusicAutomation:
         if self.playwright:
             self.playwright.stop()
 
-    def hello(self):
-        print("Moving on")
+
+    def confirmCoverImage(self) -> bool:
+        """
+        Confirms whether a unique image is loaded on the page by checking the 'src' attribute.
+        Returns True if the image is NOT the default image. Returns False otherwise.
+        Sometimes when skipping through songs or when the network is slow the cover art image doesn't load properly and won't until the song is skipped. When this occurs I want to skip the song becuase my cover art image will be not the right one.
+
+        If return True its a unique cover image
+        If return False its the defualt image
+        """
+        # Selector for the image
+        imageSelector = "#albumArt"
+
+        # Default image src (not desirable)
+        defaultImageSrc = "img/albumArt.png"
+
+        if not self.page:
+            print("confirmCoverImage(): -> Browser page is not initialized.")
+            return False
+
+        try:
+            # Wait for the image to appear on the page
+            self.page.wait_for_selector(imageSelector, timeout=5000)
+            imageSrc = self.page.get_attribute(imageSelector, "src")
+
+            # Log the image src if comments are enabled
+            if self.commentsEnable:
+                print(f"Image 'src' attribute: {imageSrc}")
+
+            # Compare the src to the default image src
+            if imageSrc == defaultImageSrc:
+                if self.commentsEnable:
+                    print("Default image loaded. Unique image not found.")
+                return False  # Default image loaded
+            else:
+                if self.commentsEnable:
+                    print("Unique image loaded correctly.")
+                return True  # Unique image loaded
+
+        except Exception as e:
+            print(f"confirmCoverImage(): Error checking image: {e}")
+            return False
 
 
     def handleRequest(self, request):
+        """
+        This function is used by the eventListeners() to log the GET requests from the site when they come in. This only logs the "media" GET requests which is the audio file for the site in question and then uses the requests library to use the current sessions browser cookies and save the audio file when certified to the local dir.
+        """
         resource_type = request.resource_type
         if resource_type in ["media"]:
             if "pianostream.com/api" in request.url:
                self.songLink = request.url
-               print(f"{request.url}")
+               if self.commentsEnable:
+                   print(f"{request.url}")
 
                try:
                     filename = "AudioFile"
@@ -91,7 +134,8 @@ class MusicAutomation:
                     os.makedirs(saveDir, exist_ok=True)
                     savePath = os.path.join(saveDir, filename)
 
-                    print(f"Downloading file from {request.url}...")
+                    if self.commentsEnable:
+                        print(f"Downloading file from {request.url}...")
                     with requests.get(request.url, cookies=cookiesDict, stream=True) as response:
                         response.raise_for_status()
                         with open(savePath, 'wb') as file:
@@ -140,7 +184,7 @@ class MusicAutomation:
         try:
             if self.commentsEnable:
                 print("Starting listeners...")
-            # Note the use of self.handleRequest and self.handleResponse
+            # Note the use of self.handleRequest and self.handleResponse. Responses are not needed for my project becuase of how the site communicates with the 
             self.page.on("request", self.handleRequest)
             #self.page.on("response", self.handleResponse)
 
@@ -148,28 +192,24 @@ class MusicAutomation:
             print(f"Error setting event listeners: {e}")
         
 
-    def clickButton(self, selector: str, attributeName: str) -> bool:
+    def clickButton(self, selector: str, attributeName: str) -> None:
         if not self.page:
             print(f"{attributeName}: -> Browser Page is not initialized. Call startBrowser() first.")
             return None
-        
         try:
             self.page.click(selector)
-
             if self.commentsEnable:
                 print(f"Clicked on {attributeName}.")
-            return True
 
         except Exception as e:
             print(f"Error clicking {attributeName}: {e}")
-            return False
 
 
-    def clickSkip(self):
+    def clickSkip(self) -> None:
         return self.clickButton("#skipButton", "Skip Button")
 
 
-    def clickPlayPause(self):
+    def clickPlayPause(self) -> None:
         return self.clickButton("#playButton", "Play Button")
 
 
@@ -240,14 +280,14 @@ class MusicAutomation:
         # Load and tag theMP3 File
         audio = MP3(audioFilePath, ID3=ID3)
         
-        # My audio files are new and don't have the tag metadata that real mp3's have so I need to add the tag to assign information to it
+        # Opening the selected audio file to have its metadata be adjusted
         if audio.tags is None:
             audio.add_tags()
         
-        # Add the metadata of the song to the song
-        audio.tags.add(TPE1(encoding=3, text=self.getSongArtist()))
-        audio.tags.add(TIT2(encoding=3, text=self.getSongTitle()))
-        audio.tags.add(TALB(encoding=3, text=self.getAlbumTitle()))
+        # # The Audio files that are donwloaded for this project come pre-tagged with artist and song info so there is no need to tag to assign information to it but just for clarity sake I included the code to do such
+        # audio.tags.add(TPE1(encoding=3, text=self.getSongArtist()))
+        # audio.tags.add(TIT2(encoding=3, text=self.getSongTitle()))
+        # audio.tags.add(TALB(encoding=3, text=self.getAlbumTitle()))
 
         # Assign the Cover Art to the audio file
         with open(coverArtPath, "rb") as albumArt:
@@ -265,3 +305,49 @@ class MusicAutomation:
         audio.save()
         if self.commentsEnable:
             print(f"Metadata updated for {audioFilePath}")
+
+
+    def renameFile(self) -> None:
+        if not self.page:
+            print("renameFile(): -> Browser Page is not initialized. Call startBrowser() first.")
+            return None
+        
+        # Ensure the audio file exists
+        audioFilePath = os.path.join("SavedFiles", "AudioFile")
+        if not os.path.exists(audioFilePath):
+            print(f"Audio file not found: {audioFilePath}")
+            return
+        
+        # Rename the Audio file to the correct style
+        songArtist = self.getSongArtist()
+        songTitle = self.getSongTitle()
+        
+        # Rename the audio file with songTitle and songArtist
+        newFileName = f"{songTitle} by {songArtist}.mp3"
+        newFilePath = os.path.join("SavedFiles", newFileName)
+        
+        # Rename the file
+        try:
+            os.rename(audioFilePath, newFilePath)
+            if self.commentsEnable:
+                print(f"File renamed to: {newFileName}")
+        except Exception as e:
+            print(f"Error renaming file: {e}")
+
+
+    def isSongUnique(self) -> bool:
+        # This function Returns True if the file is unqiue
+        songArtist = self.getSongArtist()
+        songTitle = self.getSongTitle()
+        newFileName = f"{songTitle} by {songArtist}.mp3"
+        newFilePath = os.path.join("SavedFiles", newFileName)
+        
+        # Check if the file exists
+        if os.path.exists(newFilePath):
+            if self.commentsEnable:
+                print(f"File already exists: {newFileName}")
+            return False
+        
+        if self.commentsEnable:
+            print(f"File does not exist: {newFileName}")
+        return True
