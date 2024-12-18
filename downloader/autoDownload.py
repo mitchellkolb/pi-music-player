@@ -345,9 +345,36 @@ class MusicAutomation:
         # Check if the file exists
         if os.path.exists(newFilePath):
             if self.commentsEnable:
-                print(f"File already exists: {newFileName}")
+                print(f"---->   File ALREADY exists: {newFileName}")
             return False
         
         if self.commentsEnable:
-            print(f"File does not exist: {newFileName}")
+            print(f"---->    File does NOT exist: {newFileName}")
         return True
+    
+    def errorMenu(self) -> None:
+        if not self.page:
+            print("errorMenu(): -> Browser Page is not initialized. Call startBrowser() first.")
+            return None
+        
+        try:
+            # Check for the error menu popup (using your provided HTML structure)
+            error_popup_selector = "#errorMenu"  # The error popup div
+            close_button_selector = "#errorsCloseButton"  # The close button selector
+
+            # Try to find the error popup element
+            error_popup = self.page.query_selector(error_popup_selector)
+            
+            # If the error popup is found and visible, click the close button
+            if error_popup and error_popup.is_visible():
+                if self.commentsEnable:
+                    print("       ERROR MESSAGE APPEARED -> Clicked Close")
+                # Click the close button using the clickButton method
+                self.clickButton(close_button_selector, "Error Close Button")
+            else:
+                # # No error popup found, simply return
+                # print("No error popup found.")
+                return  # End the function since no error popup is found
+
+        except Exception as e:
+            print(f"Error in errorMenu: {e}")

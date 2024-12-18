@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# My Data Folders
+downloader/SavedFiles/
+downloader/SavedImages/
+
 # C extensions
 *.so
 

@@ -67,19 +67,25 @@ def main():
         myautomation.login()
         myautomation.eventListeners()
         myautomation.clickSkip()
-        for i in range(cutOff):
+        while True:
+        #for i in range(cutOff):
+            print("\n")
+            myautomation.errorMenu()
+            time.sleep(5)
             # Check if the cover image is not unique OR the song is not unique
             if not myautomation.confirmCoverImage() or not myautomation.isSongUnique():
+                myautomation.errorMenu()
                 myautomation.clickSkip()  # Skip to the next song
                 continue  # Skip this iteration and move to the next one
-            time.sleep(1)
+            time.sleep(2)
             myautomation.clickPlayPause()
-            time.sleep(1)
+            time.sleep(2)
             myautomation.downloadCoverImage()
             myautomation.addMetaData()
             myautomation.renameFile()
-            if i != cutOff - 1:
-                myautomation.clickSkip()
+            #if i != cutOff - 1:
+                #myautomation.clickSkip()
+            myautomation.clickSkip()
         myautomation.close()
 
 
