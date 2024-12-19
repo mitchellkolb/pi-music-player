@@ -1,5 +1,6 @@
 
 
+import playwright
 import autoDownload
 import os, time
 
@@ -61,32 +62,58 @@ def main():
                 print("Invalid input. Please enter a number between 1 and 9.")
     
     elif terminalStyle == 2:
-        cutOff = 4
-        myautomation.loadCredentails()
-        myautomation.startBrowser()
-        myautomation.login()
-        myautomation.eventListeners()
-        myautomation.clickSkip()
-        while True:
-        #for i in range(cutOff):
-            print("\n")
-            myautomation.errorMenu()
-            time.sleep(5)
-            # Check if the cover image is not unique OR the song is not unique
-            if not myautomation.confirmCoverImage() or not myautomation.isSongUnique():
-                myautomation.errorMenu()
-                myautomation.clickSkip()  # Skip to the next song
-                continue  # Skip this iteration and move to the next one
-            time.sleep(2)
-            myautomation.clickPlayPause()
-            time.sleep(2)
-            myautomation.downloadCoverImage()
-            myautomation.addMetaData()
-            myautomation.renameFile()
-            #if i != cutOff - 1:
-                #myautomation.clickSkip()
-            myautomation.clickSkip()
-        myautomation.close()
+        browserStatupBool = True
+        while browserStatupBool == True:
+            try:
+                print("\n")
+                downloadingLoop = 0
+                myautomation.loadCredentails()
+                myautomation.startBrowser()
+                try:
+                    myautomation.login()
+                except playwright._impl._errors.TimeoutError as e:
+                    print(f"Login timeout detected: {e}")
+                    print("Resetting main loop due to popup or timeout issue...")
+                    continue 
+                myautomation.eventListeners()
+                myautomation.clickSkip()
+                while downloadingLoop <= 10:
+                    print("\n")
+                    startTime = time.time()
+                    myautomation.errorMenu()
+                    time.sleep(5)
+
+                    # Check if the cover image is not unique OR the song is not unique
+                    if not myautomation.confirmCoverImage() or not myautomation.isSongUnique():
+                        myautomation.errorMenu()
+                        myautomation.clickSkip()
+                        downloadingLoop += 1
+                        continue  # Skip this iteration and move to the next one
+
+                    time.sleep(2)
+                    myautomation.clickPlayPause()
+                    time.sleep(2)
+                    myautomation.downloadCoverImage()
+                    myautomation.addMetaData()
+                    myautomation.renameFile()
+                    
+                    downloadingLoop += 11
+                    # Skipping the song in the scenario where the loop is about to break makes the browser take a long time to close. So in the world where we are just gonna to close it there is no need to skip.  
+                    if downloadingLoop < 10:
+                        myautomation.clickSkip()
+                    
+                    elapsedTime = time.time() - startTime
+                    print(f"Time Taken: {elapsedTime: .2f} seconds")
+
+                myautomation.close()
+            
+            except Exception as e:
+                print(f"\nUnexpected error occurred: {e}")
+                print("Restarting the main loop...")
+                myautomation.close()
+
+            # finally:
+            #     myautomation.close()
 
 
 

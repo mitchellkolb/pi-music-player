@@ -67,6 +67,8 @@ class MusicAutomation:
             self.browser.close()
         if self.playwright:
             self.playwright.stop()
+        if self.commentsEnable:
+            print("*** Playwright was Successfully Closed ***")
 
 
     def confirmCoverImage(self) -> bool:
@@ -368,7 +370,7 @@ class MusicAutomation:
             # If the error popup is found and visible, click the close button
             if error_popup and error_popup.is_visible():
                 if self.commentsEnable:
-                    print("       ERROR MESSAGE APPEARED -> Clicked Close")
+                    print("        ERROR MESSAGE APPEARED -> Clicked Close")
                 # Click the close button using the clickButton method
                 self.clickButton(close_button_selector, "Error Close Button")
             else:
