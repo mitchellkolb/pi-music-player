@@ -97,7 +97,7 @@ def main():
                     myautomation.addMetaData()
                     myautomation.renameFile()
                     
-                    downloadingLoop += 11
+                    downloadingLoop = 0
                     # Skipping the song in the scenario where the loop is about to break makes the browser take a long time to close. So in the world where we are just gonna to close it there is no need to skip.  
                     if downloadingLoop < 10:
                         myautomation.clickSkip()
