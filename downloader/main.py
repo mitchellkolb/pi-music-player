@@ -65,6 +65,7 @@ def main():
         browserStatupBool = True
         while browserStatupBool == True:
             try:
+                time.sleep(5)
                 print("\n")
                 downloadingLoop = 0
                 myautomation.loadCredentails()
@@ -75,6 +76,7 @@ def main():
                     print(f"Login timeout detected: {e}")
                     print("Resetting main loop due to popup or timeout issue...")
                     continue 
+                time.sleep(5)
                 myautomation.eventListeners()
                 myautomation.clickSkip()
                 while downloadingLoop <= 10:
@@ -89,21 +91,21 @@ def main():
                         myautomation.clickSkip()
                         downloadingLoop += 1
                         continue  # Skip this iteration and move to the next one
-
-                    time.sleep(2)
-                    myautomation.clickPlayPause()
-                    time.sleep(2)
-                    myautomation.downloadCoverImage()
-                    myautomation.addMetaData()
-                    myautomation.renameFile()
-                    
-                    downloadingLoop = 0
-                    # Skipping the song in the scenario where the loop is about to break makes the browser take a long time to close. So in the world where we are just gonna to close it there is no need to skip.  
-                    if downloadingLoop < 10:
-                        myautomation.clickSkip()
-                    
-                    elapsedTime = time.time() - startTime
-                    print(f"Time Taken: {elapsedTime: .2f} seconds")
+                    else:
+                        time.sleep(2)
+                        myautomation.clickPlayPause()
+                        time.sleep(2)
+                        myautomation.downloadCoverImage()
+                        myautomation.addMetaData()
+                        myautomation.renameFile()
+                        
+                        downloadingLoop = 0
+                        # Skipping the song in the scenario where the loop is about to break makes the browser take a long time to close. So in the world where we are just gonna to close it there is no need to skip.  
+                        if downloadingLoop < 10:
+                            myautomation.clickSkip()
+                        
+                        elapsedTime = time.time() - startTime
+                        print(f"Time Taken: {elapsedTime: .2f} seconds")
 
                 myautomation.close()
             
