@@ -16,8 +16,10 @@ def main():
         while True:
             print("\nMain Menu")
             print("1) Launch Browser")
-            print("2) Event Listeners")
-
+            print("2) Click through tools")
+            print("3) Print Current Tab Focus")
+            print("4) Scrape the lists")
+            
             print("9) Exit")
 
             try:
@@ -29,13 +31,16 @@ def main():
                     scrapper.login()
                 elif choice == 2:
                     scrapper.clickPlayPause()
-                    time.sleep(2)
+                    time.sleep(1)
+                    scrapper.clickTools()
+                    time.sleep(1)
+                    scrapper.clickViewFavorites()
                 elif choice == 3:
                     print("choice 3")
-                    
+                    scrapper.printSiteTitle()
                 elif choice == 4:
                     print("choice 4")
-
+                    scrapper.scrapeFavorites()
                 elif choice == 5:
                     print("choice 5")
                     
@@ -53,6 +58,9 @@ def main():
                     print("Invalid selection. Please choose a number between 1 and 9.")
             except ValueError:
                 print("Invalid input. Please enter a number between 1 and 9.")
-            finally:
-                scrapper.close()
-    
+            
+
+
+if __name__ == "__main__":
+    main()
+

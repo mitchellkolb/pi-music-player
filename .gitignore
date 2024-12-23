@@ -6,6 +6,9 @@ __pycache__/
 # My Data Folders
 downloader/SavedFiles/
 downloader/SavedImages/
+favorites/deletes.txt
+favorites/favorites.txt
+favorites/data.txt
 
 # C extensions
 *.so

@@ -13,6 +13,7 @@ class MusicAutomation:
         self.email = None
         self.password = None
         self.commentsEnable = True
+        self.favPage = None
 
     def loadCredentails(self):
         # Loads the creds from the local .env file to use in the browser instance
@@ -88,25 +89,44 @@ class MusicAutomation:
         return self.clickButton("#toolsButton", "Tools Button")
     
     def clickViewFavorites(self) -> None:
-        return self.clickButton("#viewFavoriteSubmit", "View Favorites")
-    
-    def redirectToFavorites(self) -> None:
-        # Navigate to the favorites website
-        favoritesSiteUrl = "https://pianostream.streamguys1.com/show_favorites.php"
+        with self.context.expect_page() as newPage:
+            self.clickButton("#viewFavoritesSubmit", "View Favorites")
 
-        self.page.goto(favoritesSiteUrl)
-        self.page.wait_for_load_state("networkidle")
-
+        self.favPage = newPage.value
         if self.commentsEnable:
-            print("Browser navigated to favorites.php")
+            print(f"New focus is {self.favPage.url}")
+    
+    def printSiteTitle(self) -> None:
+        if self.commentsEnable:
+            print(f"Browser on {self.favPage.url} --> {self.favPage.title()}")
 
     def scrapeFavorites(self):
-        # Select all links with the 'artistlinks' class and 'target="_blank"'
-        artist_links = self.page.query_selector_all("a.artistlinks[target='_blank']")
+        print(f"Current URL: {self.favPage.url}\n")
+        self.favPage.wait_for_load_state("networkidle")
+
+        # Wait for the specific <tr> to load
+        self.favPage.wait_for_selector("tr:has(b:has-text('our Favorite Songs...'))")
+        
+        # Select the specific <tr> containing 'Your Favorite Songs...'
+        target_row = self.favPage.query_selector("tr:has(b:has-text('our Favorite Songs...'))")
+        
+        if target_row:
+            # Find all links within the targeted row
+            artistLinks = target_row.query_selector_all("a.artistlinks[target='_blank']")
+            
+        print(f"Found {len(artistLinks)} elements matching the selector.")
         
         data = []
-        for link in artist_links:
-            # Extract the text content of each link
-            text_content = link.inner_text()
-            data.append(text_content)
+        for link in artistLinks:
+            try:
+                textContent = link.inner_text()
+                data.append(textContent)
+            except Exception as e:
+                print(f"Error fetching text for a link: {e}")
 
+        #print(f"\n\nHere is the Data\n\n{data} \n\n")
+
+        cleanData = [i for i in data if i != '']
+
+        with open("data.txt", "w") as file:
+            file.write("\n".join(cleanData))
