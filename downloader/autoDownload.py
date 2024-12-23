@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright, Playwright
 from dotenv import load_dotenv
-import os, time
+import os, time, re
 import requests
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, TIT2, TPE1, TALB, APIC
@@ -16,6 +16,7 @@ class MusicAutomation:
         self.password = None
         self.commentsEnable = True
         self.songLink = ""
+        self.coverImage = ""
 
     def loadCredentails(self):
         # Loads the creds from the local .env file to use in the browser instance
@@ -102,11 +103,13 @@ class MusicAutomation:
             # Compare the src to the default image src
             if imageSrc == defaultImageSrc:
                 if self.commentsEnable:
-                    print("Default image loaded. Unique image not found.")
+                    print("Cover Image -> defaultAlbumArt")
+                self.coverImage = "defaultAlbumArt"
                 return False  # Default image loaded
             else:
                 if self.commentsEnable:
-                    print("Unique image loaded correctly.")
+                    print("Cover Image -> CoverImage.")
+                self.coverImage = "CoverImage"
                 return True  # Unique image loaded
 
         except Exception as e:
@@ -121,32 +124,37 @@ class MusicAutomation:
         resource_type = request.resource_type
         if resource_type in ["media"]:
             if "pianostream.com/api" in request.url:
-               self.songLink = request.url
-               if self.commentsEnable:
-                   print(f"{request.url}")
-
-               try:
-                    filename = "AudioFile"
-                    # Use cookies from the current context to download the file
-                    cookies = self.context.cookies()
-                    cookiesDict = {cookie['name']: cookie['value'] for cookie in cookies}
-
-                    # Save file to a custom directory
-                    saveDir = os.path.join(os.getcwd(), "SavedFiles")
-                    os.makedirs(saveDir, exist_ok=True)
-                    savePath = os.path.join(saveDir, filename)
-
+                if self.isSongUnique():
+                    
                     if self.commentsEnable:
-                        print(f"Downloading file from {request.url}...")
-                    with requests.get(request.url, cookies=cookiesDict, stream=True) as response:
-                        response.raise_for_status()
-                        with open(savePath, 'wb') as file:
-                            for chunk in response.iter_content(chunk_size=8192):
-                                file.write(chunk)
+                        print("In handleRequest the song is Unique")
+                    
+                    self.songLink = request.url
                     if self.commentsEnable:
-                        print(f"File saved to {savePath}")
-               except Exception as e:
-                    print(f"Error in handleRequest media try block: {e}")
+                        print(f"{request.url}")
+
+                    try:
+                            filename = "AudioFile"
+                            # Use cookies from the current context to download the file
+                            cookies = self.context.cookies()
+                            cookiesDict = {cookie['name']: cookie['value'] for cookie in cookies}
+
+                            # Save file to a custom directory
+                            saveDir = os.path.join(os.getcwd(), "SavedFiles")
+                            os.makedirs(saveDir, exist_ok=True)
+                            savePath = os.path.join(saveDir, filename)
+
+                            if self.commentsEnable:
+                                print(f"Downloading file from {request.url}...")
+                            with requests.get(request.url, cookies=cookiesDict, stream=True) as response:
+                                response.raise_for_status()
+                                with open(savePath, 'wb') as file:
+                                    for chunk in response.iter_content(chunk_size=8192):
+                                        file.write(chunk)
+                            if self.commentsEnable:
+                                print(f"File saved to {savePath}")
+                    except Exception as e:
+                            print(f"Error in handleRequest media try block: {e}")
 
 
     def downloadCoverImage(self):
@@ -267,7 +275,7 @@ class MusicAutomation:
             return None
 
         audioFilePath = os.path.join("SavedFiles", "AudioFile")
-        coverArtPath = os.path.join("SavedImages", "CoverImage")
+        coverArtPath = os.path.join("SavedImages", self.coverImage)
 
         # Ensure the audio file exists
         if not os.path.exists(audioFilePath):
@@ -309,6 +317,26 @@ class MusicAutomation:
             print(f"Metadata updated for {audioFilePath}")
 
 
+    def cleanFileName(self, fileName: str) -> str:
+        """
+        Cleans a string by removing all characters that are not allowed in file systems.
+
+        Parameters:
+            fileName (str): The original file name.
+
+        Returns:
+            str: The cleaned file name with disallowed characters removed.
+        """
+        # Define a whitelist regex for allowed characters
+        # Allows letters, numbers, spaces, dashes, underscores, periods, and parentheses
+        allowedChars = re.compile(r"[^a-zA-Z0-9 _\-\.\(\)]")
+
+        # Replace disallowed characters with an underscore
+        cleanedName = re.sub(allowedChars, "_", fileName)
+
+        return cleanedName
+
+
     def renameFile(self) -> None:
         if not self.page:
             print("renameFile(): -> Browser Page is not initialized. Call startBrowser() first.")
@@ -326,7 +354,12 @@ class MusicAutomation:
         
         # Rename the audio file with songTitle and songArtist
         newFileName = f"{songTitle} by {songArtist}.mp3"
-        newFilePath = os.path.join("SavedFiles", newFileName)
+
+        # Clean the file in case it has any disallowed charatcers like ; : / \
+        cleanedNewFileName = self.cleanFileName(newFileName)
+
+        # Make the file path
+        newFilePath = os.path.join("SavedFiles", cleanedNewFileName)
         
         # Rename the file
         try:
@@ -342,7 +375,8 @@ class MusicAutomation:
         songArtist = self.getSongArtist()
         songTitle = self.getSongTitle()
         newFileName = f"{songTitle} by {songArtist}.mp3"
-        newFilePath = os.path.join("SavedFiles", newFileName)
+        cleanedNewFileName = self.cleanFileName(newFileName)
+        newFilePath = os.path.join("SavedFiles", cleanedNewFileName)
         
         # Check if the file exists
         if os.path.exists(newFilePath):
@@ -354,6 +388,7 @@ class MusicAutomation:
             print(f"---->    File does NOT exist: {newFileName}")
         return True
     
+
     def errorMenu(self) -> None:
         if not self.page:
             print("errorMenu(): -> Browser Page is not initialized. Call startBrowser() first.")

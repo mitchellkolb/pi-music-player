@@ -79,14 +79,15 @@ def main():
                 time.sleep(5)
                 myautomation.eventListeners()
                 myautomation.clickSkip()
-                while downloadingLoop <= 10:
+                skipAmount = 20
+                while downloadingLoop <= skipAmount:
                     print("\n")
                     startTime = time.time()
                     myautomation.errorMenu()
                     time.sleep(5)
 
                     # Check if the cover image is not unique OR the song is not unique
-                    if not myautomation.confirmCoverImage() or not myautomation.isSongUnique():
+                    if not myautomation.isSongUnique():
                         myautomation.errorMenu()
                         myautomation.clickSkip()
                         downloadingLoop += 1
@@ -95,13 +96,14 @@ def main():
                         time.sleep(2)
                         myautomation.clickPlayPause()
                         time.sleep(2)
-                        myautomation.downloadCoverImage()
+                        if myautomation.confirmCoverImage():
+                            myautomation.downloadCoverImage()
                         myautomation.addMetaData()
                         myautomation.renameFile()
                         
                         downloadingLoop = 0
                         # Skipping the song in the scenario where the loop is about to break makes the browser take a long time to close. So in the world where we are just gonna to close it there is no need to skip.  
-                        if downloadingLoop < 10:
+                        if downloadingLoop < skipAmount:
                             myautomation.clickSkip()
                         
                         elapsedTime = time.time() - startTime
