@@ -329,7 +329,7 @@ class MusicAutomation:
         """
         # Define a whitelist regex for allowed characters
         # Allows letters, numbers, spaces, dashes, underscores, periods, and parentheses
-        allowedChars = re.compile(r"[^a-zA-Z0-9 _\-\.\(\)]")
+        allowedChars = re.compile(r"[^a-zA-Z0-9 _\-\.\(\)\',:\n]")
 
         # Replace disallowed characters with an underscore
         cleanedName = re.sub(allowedChars, "_", fileName)
@@ -365,7 +365,7 @@ class MusicAutomation:
         try:
             os.rename(audioFilePath, newFilePath)
             if self.commentsEnable:
-                print(f"File renamed to: {newFileName}")
+                print(f"File renamed to: \t{cleanedNewFileName}")
         except Exception as e:
             print(f"Error renaming file: {e}")
 
