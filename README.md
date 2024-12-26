@@ -83,7 +83,7 @@ I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a br
 
 
 # Project Overview
-This project utilizes 
+This project utilizes playwright now
 
 
 
