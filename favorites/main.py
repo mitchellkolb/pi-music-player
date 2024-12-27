@@ -15,10 +15,10 @@ def main():
     if terminalStyle == 1:
         while True:
             print("\nMain Menu")
-            print("1) Launch Browser")
-            print("2) Click through tools")
+            print("1) Launch Browser and go to favorites")
+            print("2) Scrape the lists")
             print("3) Print Current Tab Focus")
-            print("4) Scrape the lists")
+            print("4) ")
             
             print("9) Exit")
 
@@ -29,18 +29,19 @@ def main():
                     scrapper.loadCredentails()
                     scrapper.startBrowser()
                     scrapper.login()
-                elif choice == 2:
                     scrapper.clickPlayPause()
-                    time.sleep(1)
+                    #time.sleep(1)
                     scrapper.clickTools()
-                    time.sleep(1)
+                    #time.sleep(1)
                     scrapper.clickViewFavorites()
+                elif choice == 2:
+                    print("choise 2")
+                    scrapper.scrapeFavorites()
                 elif choice == 3:
                     print("choice 3")
                     scrapper.printSiteTitle()
                 elif choice == 4:
                     print("choice 4")
-                    scrapper.scrapeFavorites()
                 elif choice == 5:
                     print("choice 5")
                     

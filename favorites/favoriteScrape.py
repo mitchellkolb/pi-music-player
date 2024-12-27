@@ -61,6 +61,8 @@ class MusicAutomation:
     def close(self):
         if self.page:
             self.page.close()
+        if self.favPage:
+            self.favPage.close()
         if self.browser:
             self.browser.close()
         if self.playwright:
@@ -83,7 +85,7 @@ class MusicAutomation:
 
 
     def clickPlayPause(self) -> None:
-        return self.clickButton("#playButton", "Play Button")
+        return self.clickButton("#playButton", "Play/Pause Button")
     
     def clickTools(self) -> None:
         return self.clickButton("#toolsButton", "Tools Button")
@@ -100,7 +102,7 @@ class MusicAutomation:
         if self.commentsEnable:
             print(f"Browser on {self.favPage.url} --> {self.favPage.title()}")
 
-    def scrapeFavorites(self):
+    def AscrapeFavorites(self):
         print(f"Current URL: {self.favPage.url}\n")
         self.favPage.wait_for_load_state("networkidle")
 
@@ -130,3 +132,10 @@ class MusicAutomation:
 
         with open("data.txt", "w") as file:
             file.write("\n".join(cleanData))
+
+
+    def scrapeFavorites(self) -> None:
+        print(f"Current URL in context: {self.favPage.url}")
+        self.favPage.wait_for_load_state("networkidle")
+        pageContent = self.favPage.content()
+        
