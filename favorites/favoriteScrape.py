@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
-import os, time
+from bs4 import BeautifulSoup
+import os, time, requests
 
 
 class MusicAutomation:
@@ -135,7 +136,43 @@ class MusicAutomation:
 
 
     def scrapeFavorites(self) -> None:
-        print(f"Current URL in context: {self.favPage.url}")
-        self.favPage.wait_for_load_state("networkidle")
-        pageContent = self.favPage.content()
+
         
+        testingENV = True
+
+        if testingENV == False:
+            print(f"Current URL in context: {self.favPage.url}")
+            self.favPage.wait_for_load_state("networkidle")
+
+            #Export the page to a .txt file to test locally
+            pageContent = self.favPage.content()
+            with open("webpage.html", "w") as file:
+                file.write(pageContent)
+
+            #Uses the live site info to extract the html
+            cookies = self.context.cookies()
+            cookiesDict = {cookie['name']: cookie['value'] for cookie in cookies}
+            requestsFavPage =  requests.get(self.favPage.url, cookies=cookiesDict, stream=True)
+            if self.commentsEnable:
+                print(f"cookies are:\n {cookiesDict}...")
+                print(f"status code: {requestsFavPage.status_code}")
+        
+        # Dynamically find the file in the local directory
+        currentDir = os.path.dirname(os.path.abspath(__file__))  # Current script directory
+        fileName = "webpage.txt"  # Change to .html if you rename the file
+        filePath = os.path.join(currentDir, fileName)
+        # Open the file and load into BeautifulSoup
+        with open(filePath, "r", encoding="utf-8") as file:
+            htmlContent = file.read()
+
+        #soup = BeautifulSoup(requestsFavPage.text, 'html', features="html.parser")
+        soup = BeautifulSoup(htmlContent, 'html.parser')
+        print(soup.title.text)
+        # songs = soup.find_all('a', class_ = "artistlinks", href=True)[1]
+        # for song in songs:
+        #     print(song.text)
+
+        favorites = soup.find_all("tr")[6]
+        print(favorites.decode_contents()[:300])
+
+    
