@@ -22,7 +22,7 @@
     alt="Website Badge" />
 </p>
 
-I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a browser using playwright and plays music from [pianostream](pianostream.com) with a custom GUI audio controls built with the Kivy UI Python UI library. All of this is going to be placed within a 3D printed case that has openings for all ports and the 5 inch touchscreen.
+I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a browser using playwright and plays music from [pianostream](pianostream.com) with a custom GUI audio controls built with the PyQT UI Python UI library. All of this is going to be placed within a 3D printed case that has openings for all ports and the 5 inch touchscreen.
 
 
 <details>
@@ -57,7 +57,7 @@ I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a br
 - Terminal
 - Windows 10
 - Music Site: [pianostream.com](http://pianostream.com/) 
-- UI Library: [Kivy.org](https://kivy.org/)
+- UI Library: [PyQT](https://doc.qt.io/qtforpython-6/)
 - Web Automation: [playwright.dev](https://playwright.dev/) 
 
 
