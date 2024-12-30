@@ -136,43 +136,105 @@ class MusicAutomation:
 
 
     def scrapeFavorites(self) -> None:
-
         
-        testingENV = True
+        """
+        Either opens the playwright browser instance to save favorites html list or pulls in the webpage.txt html from a local file if you decided to save it and then scrapes the favorites and deleted song lists and exports them to their own files respectively.
 
-        if testingENV == False:
-            print(f"Current URL in context: {self.favPage.url}")
+        Parameters:
+            None
+
+        Returns:
+            No values returned but two files are created/modifed in this local dir, favorites.txt and deletes.txt
+       """
+        # Used for debugging and only allowing one to go at a time
+        enableFavorites = True
+        enableDeletes = True
+        enableBrowser = True  #True means it will use playwright (Make sure to set up the browser before using this option in the main menu), False means it will use local webpage.txt which should basically have the saved html from the site that the playwright goes to
+        enableExport = False  #In the Browser option you can export the site html. This made it so in dev I didn't have to open the site a bunch of times and wait for it to load to scrape it.
+
+
+        if enableBrowser == True:
+            if self.commentsEnable:
+                print(f"Current URL in context: {self.favPage.url}")
             self.favPage.wait_for_load_state("networkidle")
 
-            #Export the page to a .txt file to test locally
-            pageContent = self.favPage.content()
-            with open("webpage.html", "w") as file:
-                file.write(pageContent)
+            if enableExport:
+                #Export the page to a .txt file to test locally
+                pageContent = self.favPage.content()
+                with open("webpage.txt", "w") as file:
+                    file.write(pageContent)
 
             #Uses the live site info to extract the html
-            cookies = self.context.cookies()
-            cookiesDict = {cookie['name']: cookie['value'] for cookie in cookies}
-            requestsFavPage =  requests.get(self.favPage.url, cookies=cookiesDict, stream=True)
-            if self.commentsEnable:
-                print(f"cookies are:\n {cookiesDict}...")
-                print(f"status code: {requestsFavPage.status_code}")
+            # cookies = self.context.cookies()
+            # cookiesDict = {cookie['name']: cookie['value'] for cookie in cookies}
+            # requestsFavPage =  requests.get(self.favPage.url, cookies=cookiesDict, stream=True)
+            # if self.commentsEnable:
+            #     print(f"cookies are:\n {cookiesDict}...")
+            #     print(f"status code: {requestsFavPage.status_code}")
+            # soup = BeautifulSoup(requestsFavPage.text, features="html.parser")
+            
+            # Use Playwright's page content directly for BeautifulSoup
+            pageContent = self.favPage.content()  # Get live page HTML
+            soup = BeautifulSoup(pageContent, 'html.parser')
         
-        # Dynamically find the file in the local directory
-        currentDir = os.path.dirname(os.path.abspath(__file__))  # Current script directory
-        fileName = "webpage.txt"  # Change to .html if you rename the file
-        filePath = os.path.join(currentDir, fileName)
-        # Open the file and load into BeautifulSoup
-        with open(filePath, "r", encoding="utf-8") as file:
-            htmlContent = file.read()
+        else:
+            # Dynamically find the file in the local directory
+            currentDir = os.path.dirname(os.path.abspath(__file__))  # Current script directory
+            fileName = "webpage.txt"  # Change to .html if you rename the file
+            filePath = os.path.join(currentDir, fileName)
+            # Open the file and load into BeautifulSoup
+            with open(filePath, "r", encoding="utf-8") as file:
+                htmlContent = file.read()
+            soup = BeautifulSoup(htmlContent, 'html.parser')
+            if self.commentsEnable:
+                print("Using Webpage.txt for info")
+                print(f"File that is loaded: ->  {soup.title.text}")
 
-        #soup = BeautifulSoup(requestsFavPage.text, 'html', features="html.parser")
-        soup = BeautifulSoup(htmlContent, 'html.parser')
-        print(soup.title.text)
-        # songs = soup.find_all('a', class_ = "artistlinks", href=True)[1]
-        # for song in songs:
-        #     print(song.text)
+        if enableFavorites:
+            favorites = soup.find_all("tr")[6]
+            # Find all artistblock divs within this specific row
+            artistBlocks = favorites.find_all('div', class_='artistblock')
+            
+            # Initialize a list to store song names
+            songNames = []
+            # Loop through each artist block and find the relevant <a> tags
+            for block in artistBlocks:
+                artistLinks = block.find_all('a', class_='artistlinks', href=True)
+                # Extract every second <a> tag as it contains the song names
+                for i in range(1, len(artistLinks), 2):  # Skip every other <a> tag
+                    songNames.append(artistLinks[i].text.strip())
 
-        favorites = soup.find_all("tr")[6]
-        print(favorites.decode_contents()[:300])
+            with open("favorites.txt", "w", encoding="utf-8") as file:
+                for index, song in enumerate(songNames):
+                    if index < len(songNames) - 1:  # Not the last item
+                        file.write(song + "\n")
+                    else:  # Last item
+                        file.write(song)
 
-    
+            if self.commentsEnable:
+                print(f"Number of Favorites: {len(songNames)}")
+
+        if enableDeletes:
+            deletes = soup.find_all("tr")[8]
+            # Find all artistblock divs within this specific row
+            artistLinks = deletes.find_all('a', class_='artistlinks', href=True)
+
+            # Assign all the song items to a list. This only appends the name of the song and not the whole <a> tag
+            deleteNames = []
+            for name in artistLinks:
+                deleteNames.append(name.text)
+
+            with open("deletes.txt", "w", encoding="utf-8") as file:
+                for index, song in enumerate(deleteNames):
+                    if index < len(deleteNames) - 1:  # Not the last item
+                        file.write(song + "\n")
+                    else:  # Last item
+                        file.write(song)
+
+            if self.commentsEnable:
+                print(f"Number of Deletes: {len(deleteNames)}")
+
+
+
+
+
