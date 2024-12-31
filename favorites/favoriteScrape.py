@@ -236,5 +236,21 @@ class MusicAutomation:
 
 
 
+    def cleanFolder(self) -> None:
+        """
+        This function takes the song names from favorites.txt and deletes.txt and then goes through the folder where my unsorted downloaded songs are and seperates the songs into their respective folders
 
+        Parameters:
+            None from the function call.
+            FilePath needs to be specified in .env
+
+        Returns:
+            None from function.
+            Folders within the .env FILEPATH folder where the songs are seperated into
+        
+        """
+        
+        load_dotenv()
+        songFilePath = os.getenv("FILEPATH")
+        print(songFilePath)
 

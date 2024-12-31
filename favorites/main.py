@@ -18,7 +18,7 @@ def main():
             print("1) Launch Browser and go to favorites")
             print("2) Scrape the lists")
             print("3) Print Current Tab Focus")
-            print("4) ")
+            print("4) Clean Favorites/Deletes From Song List")
             
             print("9) Exit")
 
@@ -30,18 +30,17 @@ def main():
                     scrapper.startBrowser()
                     scrapper.login()
                     scrapper.clickPlayPause()
-                    #time.sleep(1)
                     scrapper.clickTools()
-                    #time.sleep(1)
                     scrapper.clickViewFavorites()
                 elif choice == 2:
-                    print("choise 2")
+                    print("choice 2")
                     scrapper.scrapeFavorites()
                 elif choice == 3:
                     print("choice 3")
                     scrapper.printSiteTitle()
                 elif choice == 4:
                     print("choice 4")
+                    scrapper.cleanFolder()
                 elif choice == 5:
                     print("choice 5")
                     
