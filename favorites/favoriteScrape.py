@@ -307,3 +307,22 @@ class MusicAutomation:
             with open("notMoved.txt", "w", encoding="utf-8") as notMovedFile:
                 for item in notMovedList:
                     notMovedFile.write(item + "\n")
+
+
+def tokenMatchRatio(self, textA: str, textB: str) -> float:
+    """
+    Compares two strings by splitting them into sets of tokens (words).
+    Returns a similarity ratio between 0 and 1 based on the number of matching tokens.
+
+    E.g., "song name 1 by artist" vs "song name 1 by artist remix"
+    """
+    tokensA = set(textA.lower().split())
+    tokensB = set(textB.lower().split())
+    if not tokensA and not tokensB:
+        return 0.0
+
+    intersectionSize = len(tokensA.intersection(tokensB))
+    unionSize = len(tokensA.union(tokensB))
+    # A simple measure: ratio of intersection to union
+    ratio = intersectionSize / unionSize
+    return ratio
