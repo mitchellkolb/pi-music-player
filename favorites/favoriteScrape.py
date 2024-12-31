@@ -254,3 +254,56 @@ class MusicAutomation:
         songFilePath = os.getenv("FILEPATH")
         print(songFilePath)
 
+
+        # Read favorites from favorites.txt
+        favoritesSet = set()
+        with open("favorites.txt", "r", encoding="utf-8") as favoritesFile:
+            for line in favoritesFile:
+                line = line.strip()
+                if line:
+                    favoritesSet.add(line)
+
+        # Read deletes from deletes.txt
+        deletesSet = set()
+        with open("deletes.txt", "r", encoding="utf-8") as deletesFile:
+            for line in deletesFile:
+                line = line.strip()
+                if line:
+                    deletesSet.add(line)
+
+        # Define the target directories for favorites and deletes
+        favoritesPath = os.path.join(songFilePath, "favorites")
+        deletesPath = os.path.join(songFilePath, "deletes")
+
+        # Create the folders if they don't exist
+        os.makedirs(favoritesPath, exist_ok=True)
+        os.makedirs(deletesPath, exist_ok=True)
+
+        notMovedList = []
+
+        # Go through each file in songFilePath
+        for fileName in os.listdir(songFilePath):
+            # Full path of the file
+            fullFilePath = os.path.join(songFilePath, fileName)
+
+            # Only care about mp3 files
+            if os.path.isfile(fullFilePath) and fileName.lower().endswith(".mp3"):
+                # Remove the .mp3 extension for comparison
+                baseName = fileName[:-4].strip()
+
+                # Check if the file (without .mp3) is in favorites or deletes
+                if baseName in favoritesSet:
+                    # Move to favorites
+                    shutil.move(fullFilePath, os.path.join(favoritesPath, fileName))
+                elif baseName in deletesSet:
+                    # Move to deletes
+                    shutil.move(fullFilePath, os.path.join(deletesPath, fileName))
+                else:
+                    # If not found in either file, add to the notMoved list
+                    notMovedList.append(baseName)
+
+        # Write the not moved songs to notMoved.txt
+        if notMovedList:
+            with open("notMoved.txt", "w", encoding="utf-8") as notMovedFile:
+                for item in notMovedList:
+                    notMovedFile.write(item + "\n")
