@@ -5,7 +5,7 @@ __pycache__/
 
 # My Data Folders
 downloader/SavedFiles/
-downloader/SavedImages/
+downloader/SavedImages/CoverImage
 downloader/SavedImages/defaultAlbumArt
 favorites/deletes.txt
 favorites/favorites.txt

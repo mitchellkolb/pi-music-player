@@ -415,3 +415,25 @@ class MusicAutomation:
 
         except Exception as e:
             print(f"Error in errorMenu: {e}")
+
+    
+    def thumbsDownSong(self) -> None:
+        if not self.page:
+            print("thumbsDownSong(): -> Browser Page is not initialized. Call startBrowser() first.")
+            return None
+        
+        try:
+            #time.sleep(1)
+            self.clickButton("#rejectButton", "Thumbs Down Button")
+            if self.page.locator("#confirmRejectButton").is_visible():
+                time.sleep(1)
+                self.clickButton("#confirmRejectButton", "Confirm Reject Button")
+            else:
+                self.clickSkip()
+                time.sleep(1)
+            
+        except Exception as e:
+            print(f"Error Clicking Thumbs Down Button: {e}")
+            self.clickSkip()
+
+        
