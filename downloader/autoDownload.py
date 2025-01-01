@@ -396,18 +396,18 @@ class MusicAutomation:
         
         try:
             # Check for the error menu popup (using your provided HTML structure)
-            error_popup_selector = "#errorMenu"  # The error popup div
-            close_button_selector = "#errorsCloseButton"  # The close button selector
+            errorPopupSelector = "#errorMenu"  # The error popup div
+            closeButtonSelector = "#errorsCloseButton"  # The close button selector
 
             # Try to find the error popup element
-            error_popup = self.page.query_selector(error_popup_selector)
+            errorPopup = self.page.query_selector(errorPopupSelector)
             
             # If the error popup is found and visible, click the close button
-            if error_popup and error_popup.is_visible():
+            if errorPopup and errorPopup.is_visible():
                 if self.commentsEnable:
                     print("        ERROR MESSAGE APPEARED -> Clicked Close")
                 # Click the close button using the clickButton method
-                self.clickButton(close_button_selector, "Error Close Button")
+                self.clickButton(closeButtonSelector, "Error Close Button")
             else:
                 # # No error popup found, simply return
                 # print("No error popup found.")
@@ -418,6 +418,16 @@ class MusicAutomation:
 
     
     def thumbsDownSong(self) -> None:
+        """
+        This function attempts to click the thumbs down button combo that skips the song
+
+        Parameters:
+            None from the function call.
+            
+        Returns:
+            None from function.
+        
+        """
         if not self.page:
             print("thumbsDownSong(): -> Browser Page is not initialized. Call startBrowser() first.")
             return None
