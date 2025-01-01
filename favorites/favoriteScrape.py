@@ -255,9 +255,17 @@ class MusicAutomation:
         print(songFilePath)
 
 
+        # Use an absolute or relative path here
+        favoritesPath = os.path.join(os.getcwd(), "favorites.txt")
+        deletesPath = os.path.join(os.getcwd(), "deletes.txt")
+        
+        # Check existence before trying to open
+        if not os.path.exists(favoritesPath) or not os.path.exists(deletesPath):
+            raise FileNotFoundError(f"{favoritesPath} does not exist. Please check the file location or {deletesPath}")
+        
         # Read favorites from favorites.txt
         favoritesSet = set()
-        with open("favorites.txt", "r", encoding="utf-8") as favoritesFile:
+        with open(favoritesPath, "r", encoding="utf-8") as favoritesFile:
             for line in favoritesFile:
                 line = line.strip()
                 if line:
@@ -265,7 +273,7 @@ class MusicAutomation:
 
         # Read deletes from deletes.txt
         deletesSet = set()
-        with open("deletes.txt", "r", encoding="utf-8") as deletesFile:
+        with open(deletesPath, "r", encoding="utf-8") as deletesFile:
             for line in deletesFile:
                 line = line.strip()
                 if line:
@@ -309,20 +317,3 @@ class MusicAutomation:
                     notMovedFile.write(item + "\n")
 
 
-def tokenMatchRatio(self, textA: str, textB: str) -> float:
-    """
-    Compares two strings by splitting them into sets of tokens (words).
-    Returns a similarity ratio between 0 and 1 based on the number of matching tokens.
-
-    E.g., "song name 1 by artist" vs "song name 1 by artist remix"
-    """
-    tokensA = set(textA.lower().split())
-    tokensB = set(textB.lower().split())
-    if not tokensA and not tokensB:
-        return 0.0
-
-    intersectionSize = len(tokensA.intersection(tokensB))
-    unionSize = len(tokensA.union(tokensB))
-    # A simple measure: ratio of intersection to union
-    ratio = intersectionSize / unionSize
-    return ratio
