@@ -2,6 +2,7 @@ from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import os, time, requests
+from pathlib import Path
 
 
 class MusicAutomation:
@@ -249,20 +250,36 @@ class MusicAutomation:
             Folders within the .env FILEPATH folder where the songs are seperated into
         
         """
-        
+        # This is the file path of the .mp3s songs folder
         load_dotenv()
         songFilePath = os.getenv("FILEPATH")
         print(songFilePath)
 
+        # Get the directory of this script. I'm trying out pathlib becuase I read on an article it is better cuase its newer.
+        scriptDir = Path(__file__).parent
+        
+        # Define file paths
+        favoritesPath = scriptDir / "favorites.txt"
+        deletesPath = scriptDir / "deletes.txt"
+        
+        # Check if favorites.txt exists
+        if favoritesPath.exists():
+            with open(favoritesPath, 'r') as favoritesFile:
+                firstLine = favoritesFile.readline().strip()
+                print("First line of favorites.txt:")
+                print(firstLine)
+        else:
+            print("favorites.txt does not exist.")
+        
+        # Check if deletes.txt exists
+        if deletesPath.exists():
+            with open(deletesPath, 'r') as deletesFile:
+                firstLine = deletesFile.readline().strip()
+                print("First line of deletes.txt:")
+                print(firstLine)
+        else:
+            print("deletes.txt does not exist.")
 
-        # Use an absolute or relative path here
-        favoritesPath = os.path.join(os.getcwd(), "favorites.txt")
-        deletesPath = os.path.join(os.getcwd(), "deletes.txt")
-        
-        # Check existence before trying to open
-        if not os.path.exists(favoritesPath) or not os.path.exists(deletesPath):
-            raise FileNotFoundError(f"{favoritesPath} does not exist. Please check the file location or {deletesPath}")
-        
         # Read favorites from favorites.txt
         favoritesSet = set()
         with open(favoritesPath, "r", encoding="utf-8") as favoritesFile:
@@ -279,13 +296,12 @@ class MusicAutomation:
                 if line:
                     deletesSet.add(line)
 
-        # Define the target directories for favorites and deletes
-        favoritesPath = os.path.join(songFilePath, "favorites")
-        deletesPath = os.path.join(songFilePath, "deletes")
+        input("Press enter")
 
-        # Create the folders if they don't exist
-        os.makedirs(favoritesPath, exist_ok=True)
-        os.makedirs(deletesPath, exist_ok=True)
+
+
+
+
 
         notMovedList = []
 
