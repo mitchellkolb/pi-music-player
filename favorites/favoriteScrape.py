@@ -250,7 +250,7 @@ class MusicAutomation:
             Folders within the .env FILEPATH folder where the songs are seperated into
         
         """
-        # This is the file path of the .mp3s songs folder
+        # --- This is the file path of the .mp3s songs folder
         load_dotenv()
         songFilePath = os.getenv("FILEPATH")
         print(songFilePath)
@@ -258,49 +258,20 @@ class MusicAutomation:
         # Get the directory of this script. I'm trying out pathlib becuase I read on an article it is better cuase its newer.
         scriptDir = Path(__file__).parent
         
-        # Define file paths
+        # --- Define file paths
         favoritesTXTPath = scriptDir / "favorites.txt"
         deletesTXTPath = scriptDir / "deletes.txt"
+        notMovedTXTPath = scriptDir / "notMoved.txt"
         
-        # Check if favorites.txt exists
-        if favoritesTXTPath.exists():
-            with open(favoritesTXTPath, 'r') as favoritesFile:
-                firstLine = favoritesFile.readline().strip()
-                print("First line of favorites.txt:")
-                print(firstLine)
-        else:
+        # Check if .txt exists
+        if not favoritesTXTPath.exists():
             print("favorites.txt does not exist.")
         
-        # Check if deletes.txt exists
-        if deletesTXTPath.exists():
-            with open(deletesTXTPath, 'r') as deletesFile:
-                firstLine = deletesFile.readline().strip()
-                print("First line of deletes.txt:")
-                print(firstLine)
-        else:
+        if not deletesTXTPath.exists():
             print("deletes.txt does not exist.")
+        
 
-        # Read favorites from favorites.txt
-        favoritesSet = set()
-        with open(favoritesTXTPath, "r", encoding="utf-8") as favoritesFile:
-            for line in favoritesFile:
-                line = line.strip()
-                if line:
-                    favoritesSet.add(line)
-
-        # Read deletes from deletes.txt
-        deletesSet = set()
-        with open(deletesTXTPath, "r", encoding="utf-8") as deletesFile:
-            for line in deletesFile:
-                line = line.strip()
-                if line:
-                    deletesSet.add(line)
-
-        input("Press enter")
-
-
-        # Creating the Folders for where the songs will be placed in.
-        # Define file paths
+        # --- Creating the Folders for where the songs will be placed in.
         favoritesFolderPath = scriptDir / "favoritesSorted"
         deletesFolderPath = scriptDir / "deletesSorted"
 
@@ -317,35 +288,60 @@ class MusicAutomation:
             print(f"Folder '{deletesFolderPath.name}' already exists.")
 
 
+        # -- Reading and adding the data from the .txt to sets to loop through 
+        favoritesList = []
+        with open(favoritesTXTPath, "r", encoding="utf-8") as favoritesFile:
+            for line in favoritesFile:
+                line = line.strip()
+                if line:
+                    favoritesList.add(line)
 
+        deletesList = []
+        with open(deletesTXTPath, "r", encoding="utf-8") as deletesFile:
+            for line in deletesFile:
+                line = line.strip()
+                if line:
+                    deletesList.add(line)
 
+        # --- Going through each song and moving them to the correct folder
         notMovedList = []
+        # Go through each file in the lists
+        for songName in deletesList:
+            
 
-        # Go through each file in songFilePath
-        for fileName in os.listdir(songFilePath):
-            # Full path of the file
-            fullFilePath = os.path.join(songFilePath, fileName)
 
-            # Only care about mp3 files
-            if os.path.isfile(fullFilePath) and fileName.lower().endswith(".mp3"):
-                # Remove the .mp3 extension for comparison
-                baseName = fileName[:-4].strip()
-
-                # Check if the file (without .mp3) is in favorites or deletes
-                if baseName in favoritesSet:
-                    # Move to favorites
-                    shutil.move(fullFilePath, os.path.join(favoritesTXTPath, fileName))
-                elif baseName in deletesSet:
-                    # Move to deletes
-                    shutil.move(fullFilePath, os.path.join(deletesTXTPath, fileName))
-                else:
-                    # If not found in either file, add to the notMoved list
-                    notMovedList.append(baseName)
 
         # Write the not moved songs to notMoved.txt
-        if notMovedList:
-            with open("notMoved.txt", "w", encoding="utf-8") as notMovedFile:
+        if notMovedList:  # go on only if the list has items
+            with open(notMovedTXTPath, "w", encoding="utf-8") as notMovedFile:
                 for item in notMovedList:
                     notMovedFile.write(item + "\n")
+            print(f"File '{notMovedTXTPath.name}' created/updated with {len(notMovedList)} items.")
 
 
+    def movedMatchedFiles(self, songNames, sourceDir, outputDir) -> bool:
+
+        """
+        
+
+
+        """
+
+        # Make sure the destination directory exists in the system
+        Path(outputDir).mkdir(exist_ok=True)
+
+        for songName in songNames:
+            sourceFilePath = os.path.join(sourceDir, songName)
+            outputFilePath = os.path.join(outputDir, songName)
+
+            # Check if the file exists in the source dir
+            if os.path.exists(sourceFilePath):
+                # This means that the song is matched so we will move it out
+                shutil.move(sourceFilePath, outputFilePath)
+                if self.commentsEnable:
+                    print(f"Moved {songName} to {outputDir}")
+            else:
+                if self.commentsEnable:
+                    print(f"{songName} : Not found")
+
+            
