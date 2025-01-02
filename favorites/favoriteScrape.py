@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
-import os, time, requests
+import os, time, requests, shutil
 from pathlib import Path
 
 
@@ -259,12 +259,12 @@ class MusicAutomation:
         scriptDir = Path(__file__).parent
         
         # Define file paths
-        favoritesPath = scriptDir / "favorites.txt"
-        deletesPath = scriptDir / "deletes.txt"
+        favoritesTXTPath = scriptDir / "favorites.txt"
+        deletesTXTPath = scriptDir / "deletes.txt"
         
         # Check if favorites.txt exists
-        if favoritesPath.exists():
-            with open(favoritesPath, 'r') as favoritesFile:
+        if favoritesTXTPath.exists():
+            with open(favoritesTXTPath, 'r') as favoritesFile:
                 firstLine = favoritesFile.readline().strip()
                 print("First line of favorites.txt:")
                 print(firstLine)
@@ -272,8 +272,8 @@ class MusicAutomation:
             print("favorites.txt does not exist.")
         
         # Check if deletes.txt exists
-        if deletesPath.exists():
-            with open(deletesPath, 'r') as deletesFile:
+        if deletesTXTPath.exists():
+            with open(deletesTXTPath, 'r') as deletesFile:
                 firstLine = deletesFile.readline().strip()
                 print("First line of deletes.txt:")
                 print(firstLine)
@@ -282,7 +282,7 @@ class MusicAutomation:
 
         # Read favorites from favorites.txt
         favoritesSet = set()
-        with open(favoritesPath, "r", encoding="utf-8") as favoritesFile:
+        with open(favoritesTXTPath, "r", encoding="utf-8") as favoritesFile:
             for line in favoritesFile:
                 line = line.strip()
                 if line:
@@ -290,7 +290,7 @@ class MusicAutomation:
 
         # Read deletes from deletes.txt
         deletesSet = set()
-        with open(deletesPath, "r", encoding="utf-8") as deletesFile:
+        with open(deletesTXTPath, "r", encoding="utf-8") as deletesFile:
             for line in deletesFile:
                 line = line.strip()
                 if line:
@@ -299,6 +299,22 @@ class MusicAutomation:
         input("Press enter")
 
 
+        # Creating the Folders for where the songs will be placed in.
+        # Define file paths
+        favoritesFolderPath = scriptDir / "favoritesSorted"
+        deletesFolderPath = scriptDir / "deletesSorted"
+
+        # Create the folder if it doesn't exist
+        if not favoritesFolderPath.exists():
+            favoritesFolderPath.mkdir()
+            print(f"Folder '{favoritesFolderPath.name}' created successfully.")
+        else:
+            print(f"Folder '{favoritesFolderPath.name}' already exists.")
+        if not deletesFolderPath.exists():
+            deletesFolderPath.mkdir()
+            print(f"Folder '{deletesFolderPath.name}' created successfully.")
+        else:
+            print(f"Folder '{deletesFolderPath.name}' already exists.")
 
 
 
@@ -318,10 +334,10 @@ class MusicAutomation:
                 # Check if the file (without .mp3) is in favorites or deletes
                 if baseName in favoritesSet:
                     # Move to favorites
-                    shutil.move(fullFilePath, os.path.join(favoritesPath, fileName))
+                    shutil.move(fullFilePath, os.path.join(favoritesTXTPath, fileName))
                 elif baseName in deletesSet:
                     # Move to deletes
-                    shutil.move(fullFilePath, os.path.join(deletesPath, fileName))
+                    shutil.move(fullFilePath, os.path.join(deletesTXTPath, fileName))
                 else:
                     # If not found in either file, add to the notMoved list
                     notMovedList.append(baseName)
