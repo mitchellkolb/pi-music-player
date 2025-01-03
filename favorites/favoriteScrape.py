@@ -307,7 +307,8 @@ class MusicAutomation:
         notMovedList = []
         # Go through each file in the lists
         for songName in deletesList:
-            
+            self.movedMatchedFiles(songName, songFilePath, deletesFolderPath)
+
 
 
 
@@ -319,7 +320,7 @@ class MusicAutomation:
             print(f"File '{notMovedTXTPath.name}' created/updated with {len(notMovedList)} items.")
 
 
-    def movedMatchedFiles(self, songNames, sourceDir, outputDir) -> bool:
+    def movedMatchedFiles(self, songName, sourceDir, outputDir) -> bool:
 
         """
         
@@ -330,18 +331,20 @@ class MusicAutomation:
         # Make sure the destination directory exists in the system
         Path(outputDir).mkdir(exist_ok=True)
 
-        for songName in songNames:
-            sourceFilePath = os.path.join(sourceDir, songName)
-            outputFilePath = os.path.join(outputDir, songName)
+        fullSongName = f"{songName}.mp3"
+        sourceFilePath = os.path.join(sourceDir, fullSongName)
+        outputFilePath = os.path.join(outputDir, fullSongName)
 
-            # Check if the file exists in the source dir
-            if os.path.exists(sourceFilePath):
-                # This means that the song is matched so we will move it out
-                shutil.move(sourceFilePath, outputFilePath)
-                if self.commentsEnable:
-                    print(f"Moved {songName} to {outputDir}")
-            else:
-                if self.commentsEnable:
-                    print(f"{songName} : Not found")
+        # Check if the file exists in the source dir
+        if os.path.exists(sourceFilePath):
+            # This means that the song is matched so we will move it out
+            shutil.move(sourceFilePath, outputFilePath)
+            if self.commentsEnable:
+                print(f"Moved {fullSongName} to {outputDir}")
+            return True
+        else:
+            if self.commentsEnable:
+                print(f"{fullSongName} : Not found")
+            return False
 
             
