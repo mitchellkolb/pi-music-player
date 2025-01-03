@@ -104,37 +104,6 @@ class MusicAutomation:
         if self.commentsEnable:
             print(f"Browser on {self.favPage.url} --> {self.favPage.title()}")
 
-    def AscrapeFavorites(self):
-        print(f"Current URL: {self.favPage.url}\n")
-        self.favPage.wait_for_load_state("networkidle")
-
-        # Wait for the specific <tr> to load
-        self.favPage.wait_for_selector("tr:has(b:has-text('our Favorite Songs...'))")
-        
-        # Select the specific <tr> containing 'Your Favorite Songs...'
-        target_row = self.favPage.query_selector("tr:has(b:has-text('our Favorite Songs...'))")
-        
-        if target_row:
-            # Find all links within the targeted row
-            artistLinks = target_row.query_selector_all("a.artistlinks[target='_blank']")
-            
-        print(f"Found {len(artistLinks)} elements matching the selector.")
-        
-        data = []
-        for link in artistLinks:
-            try:
-                textContent = link.inner_text()
-                data.append(textContent)
-            except Exception as e:
-                print(f"Error fetching text for a link: {e}")
-
-        #print(f"\n\nHere is the Data\n\n{data} \n\n")
-
-        cleanData = [i for i in data if i != '']
-
-        with open("data.txt", "w") as file:
-            file.write("\n".join(cleanData))
-
 
     def scrapeFavorites(self) -> None:
         
