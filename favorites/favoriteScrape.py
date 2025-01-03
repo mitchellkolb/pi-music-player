@@ -323,9 +323,17 @@ class MusicAutomation:
     def movedMatchedFiles(self, songName, sourceDir, outputDir) -> bool:
 
         """
-        
+        This function matches a given song name (without extension) to an existing file in the source directory, appending '.mp3' to the name.
+        If the file exists, it moves the song to the specified output directory.
 
+        Parameters:
+            songName (str): The base name of the song (without the .mp3 extension).
+            sourceDir (str): The directory where the unsorted songs are located.
+            outputDir (str): The directory where matched songs should be moved.
 
+        Returns:
+            bool: True if the song was successfully found and moved, False otherwise.
+       
         """
 
         # Make sure the destination directory exists in the system
