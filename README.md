@@ -107,7 +107,8 @@ This project utilizes playwright now
 
 
 ## Implementation
-In this project
+
+This Python script automates interactions with a music streaming website using the Playwright library. It includes features like logging in with credentials from a `.env` file, controlling playback (play/pause, thumbs up/down, mute, and volume adjustment), and retrieving metadata such as the current song's title, artist, album name, and album art URL. The script uses CSS selectors to interact with webpage elements and includes detailed error handling and debug messages for seamless operation. Ideal for automating repetitive tasks or gathering music metadata programmatically.
 
 ## Future Work
 Future improvements could include
