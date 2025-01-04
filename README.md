@@ -95,7 +95,13 @@ This project utilizes playwright now
 
 
 ## Files and Structure
-- `main.py`: Contains the UI code.
+- `main.py` Contains the UI code.
+- `automation.py` Contains the Web Automation class that controls the browser
+- `documents/...` Folder contains the workflow diagrams and project specification documents
+- `downloader/...` Folder contains the codebase for the utility tool that automates the downloading of songs from the music player site
+- `favorites/...` Folder contains the codebase for the utility tool that auomates the process of downloading the favorites list from the music player account page and then sorts the downloaded songs according to their list preferences.
+- `gui/...` Folder contains the codebase to the PyQT6 gui files that are needed to run development builds of the program.
+- `savedFiles/...` Folder contains some development png's and jpeg's that can be loaded into the gui folder. 
 > [!NOTE]
 > These files were 
 
