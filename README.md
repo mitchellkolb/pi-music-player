@@ -20,9 +20,12 @@
 <img
     src="https://img.shields.io/badge/raspberrypi-A22846?style=for-the-badge&logo=raspberrypi&logoColor=white"
     alt="Website Badge" />
+<img
+    src="https://img.shields.io/badge/qt6-41cd52?style=for-the-badge&logo=qt&logoColor=white"
+    alt="Website Badge" />
 </p>
 
-I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a browser using playwright and plays music from [pianostream](pianostream.com) with a custom GUI audio controls built with the PyQT UI Python UI library. All of this is going to be placed within a 3D printed case that has openings for all ports and the 5 inch touchscreen.
+This is a music player that boots off of a Raspberry Pi 3B+ that opens a browser using playwright and plays music from [pianostream](http://pianostream.com/) with a custom GUI audio controls built with the PyQT UI Python UI library. All of this is going to be placed within a 3D printed case that has openings for all ports and the 5 inch touchscreen.
 
 
 <details>
@@ -47,6 +50,7 @@ I'm building a music player that boots off of a Raspberry Pi 3B+ that opens a br
 # What I Learned in this Project
 - Producing complete software that is used by the client
 - Programming using web automation and a new UI library
+- Creating specific utility tools to download and sort song files
 - Learning how to create 3D models that can be printed and fit with other peripherals.
 
 
