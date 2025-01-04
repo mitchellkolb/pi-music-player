@@ -263,23 +263,27 @@ class MusicAutomation:
             for line in favoritesFile:
                 line = line.strip()
                 if line:
-                    favoritesList.add(line)
+                    favoritesList.append(line)
 
         deletesList = []
         with open(deletesTXTPath, "r", encoding="utf-8") as deletesFile:
             for line in deletesFile:
                 line = line.strip()
                 if line:
-                    deletesList.add(line)
+                    deletesList.append(line)
 
         # --- Going through each song and moving them to the correct folder
         notMovedList = []
         # Go through each file in the lists
         for songName in deletesList:
-            self.movedMatchedFiles(songName, songFilePath, deletesFolderPath)
+            resultBool = self.movedMatchedFiles(songName, songFilePath, deletesFolderPath)
+            if not resultBool:
+                notMovedList.append(songName)
 
-
-
+        for songName in favoritesList:
+            resultBool = self.movedMatchedFiles(songName, songFilePath, favoritesFolderPath)
+            if not resultBool:
+                notMovedList.append(songName)
 
         # Write the not moved songs to notMoved.txt
         if notMovedList:  # go on only if the list has items
