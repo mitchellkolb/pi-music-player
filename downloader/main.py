@@ -3,6 +3,22 @@
 import playwright
 import autoDownload
 import os, time
+from datetime import datetime, timedelta
+
+
+
+def timeoutPlease():
+    hourAmount = 3
+    # Total sleep duration in seconds
+    totalDuration = hourAmount * 60 * 60                
+    # Calculate the end time
+    endTime = datetime.now() + timedelta(seconds=totalDuration)
+    endTimeFormatted = endTime.strftime("%I:%M:%S %p")  # Format as 12-hour time with AM/PM
+    # Print the start message
+    print(f"The sleep will end at {endTimeFormatted}.")
+    # Sleep for hours
+    time.sleep(totalDuration)
+    print(f"{hourAmount} hours have passed.")
 
 
 
@@ -67,7 +83,7 @@ def main():
             try:
                 time.sleep(5)
                 print("\n")
-                downloadingLoop = 0
+                downloadingLoop = 0               
                 myautomation.loadCredentails()
                 myautomation.startBrowser()
                 try:
@@ -115,11 +131,14 @@ def main():
 
 
                 myautomation.close()
-            
+                timeoutPlease()
+
+
             except Exception as e:
                 print(f"\nUnexpected error occurred: {e}")
                 print("Restarting the main loop...")
                 myautomation.close()
+                timeoutPlease()
 
             # finally:
             #     myautomation.close()
