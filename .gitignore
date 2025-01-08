@@ -13,6 +13,9 @@ favorites/data.txt
 favorites/webpage.txt
 favorites/webpage.html
 favorites/notMoved.txt
+favorites/deletesSorted
+favorites/favoritesSorted
+favorites/allOfSongs
 
 # C extensions
 *.so
