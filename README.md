@@ -21,7 +21,7 @@
     src="https://img.shields.io/badge/raspberrypi-A22846?style=for-the-badge&logo=raspberrypi&logoColor=white"
     alt="Website Badge" />
 <img
-    src="https://img.shields.io/badge/qt6-41cd52?style=for-the-badge&logo=qt&logoColor=white"
+    src="https://img.shields.io/badge/PyQT6-41cd52?style=for-the-badge&logo=qt&logoColor=white"
     alt="Website Badge" />
 </p>
 
@@ -92,7 +92,10 @@ This project utilizes playwright now
 
 
 ## Project Details
-
+ - This project contains 3 supplementary folders with utility tools that help when setting up the program.
+ 1) Downloader:
+ 2) Favorites:
+ 3) Documentation:
 
 ## Files and Structure
 - `main.py` Contains the UI code.
