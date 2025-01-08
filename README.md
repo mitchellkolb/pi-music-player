@@ -93,9 +93,9 @@ This project utilizes playwright now
 
 ## Project Details
  - This project contains 3 supplementary folders with utility tools that help when setting up the program.
- 1) Downloader:
- 2) Favorites:
- 3) Documentation:
+ 1) Downloader: This tool automates the process or downloading songs from the piano site and assigning album art and artist info to the mp3 file when created.
+ 2) Favorites: This tool saves the liked and disliked songs from your piano stream profile and then once linked to you local folder for where you downloaded your songs will sort them into seperate folders so you can clean your downloaded songs similar to how they are on the player online
+ 3) Documentation: This contains the documentation and diagrams for the project.
 
 ## Files and Structure
 - `main.py` Contains the UI code.
