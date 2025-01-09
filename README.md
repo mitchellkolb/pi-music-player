@@ -105,8 +105,7 @@ This project utilizes playwright now
 - `favorites/...` Folder contains the codebase for the utility tool that auomates the process of downloading the favorites list from the music player account page and then sorts the downloaded songs according to their list preferences.
 - `gui/...` Folder contains the codebase to the PyQT6 gui files that are needed to run development builds of the program.
 - `savedFiles/...` Folder contains some development png's and jpeg's that can be loaded into the gui folder. 
-> [!NOTE]
-> These files were 
+
 
 
 ## Implementation
@@ -114,7 +113,7 @@ This project utilizes playwright now
 This Python script automates interactions with a music streaming website using the Playwright library. It includes features like logging in with credentials from a `.env` file, controlling playback (play/pause, thumbs up/down, mute, and volume adjustment), and retrieving metadata such as the current song's title, artist, album name, and album art URL. The script uses CSS selectors to interact with webpage elements and includes detailed error handling and debug messages for seamless operation. Ideal for automating repetitive tasks or gathering music metadata programmatically.
 
 ## Future Work
-Future improvements could include
+Future improvements could include having the UI have gestures and actions that are animated to some degree so make the user interface be more identifiable to what they are functionally doing. This could include a colored slider adjustment for the volume slider or clicking sounds for the buttons or sliding animations for when the next song plays instead of the current fading in and out non-animation.
 
 
 
