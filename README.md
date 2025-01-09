@@ -115,8 +115,7 @@ This Python script automates interactions with a music streaming website using t
 ## Future Work
 Future improvements could include 
 - Having the UI have gestures and actions that are animated to some degree so make the user interface be more identifiable to what they are functionally doing. This could include a colored slider adjustment for the volume slider or clicking sounds for the buttons or sliding animations for when the next song plays instead of the current fading in and out non-animation.
-- 
-
+- Adding multitouch support is a feature I’d like to explore in the future. For example, I envision implementing swipe gestures for navigation or pinch gestures for zoom functionality using PyQt’s QGestureEvent. Additionally, designing larger, finger-friendly controls with clear visual feedback, like color changes or press animations, would improve usability on touchscreens.
 
 
 
