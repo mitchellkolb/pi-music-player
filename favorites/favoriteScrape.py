@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
-import os, time, requests, shutil
+import os, time, requests, shutil, re
 from pathlib import Path
 
 
@@ -263,14 +263,16 @@ class MusicAutomation:
             for line in favoritesFile:
                 line = line.strip()
                 if line:
-                    favoritesList.append(line)
+                    cleanedLine = self.cleanFileName(line)
+                    favoritesList.append(cleanedLine)
 
         deletesList = []
         with open(deletesTXTPath, "r", encoding="utf-8") as deletesFile:
             for line in deletesFile:
                 line = line.strip()
                 if line:
-                    deletesList.append(line)
+                    cleanedLine = self.cleanFileName(line)
+                    deletesList.append(cleanedLine)
 
         # --- Going through each song and moving them to the correct folder
         notMovedList = []
@@ -328,4 +330,21 @@ class MusicAutomation:
                 print(f"{fullSongName} : Not found")
             return False
 
-            
+    def cleanFileName(self, fileName: str) -> str:
+        """
+        Cleans a string by removing all characters that are not allowed in file systems.
+
+        Parameters:
+            fileName (str): The original file name.
+
+        Returns:
+            str: The cleaned file name with disallowed characters removed.
+        """
+        # Define a whitelist regex for allowed characters
+        # Allows letters, numbers, spaces, dashes, underscores, periods, and parentheses
+        allowedChars = re.compile(r"[^a-zA-Z0-9 _\-\.\(\)\',:\n]")
+
+        # Replace disallowed characters with an underscore
+        cleanedName = re.sub(allowedChars, "_", fileName)
+
+        return cleanedName
